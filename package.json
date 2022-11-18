@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "/backend/server.js"
     "test": "jest --env node"
   },
   "repository": {
