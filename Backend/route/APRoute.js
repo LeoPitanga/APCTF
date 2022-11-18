@@ -19,6 +19,14 @@ router.get('/', async function (req, res) {
 	res.end();
 });
 
+router.get('/configuracao-atividade.html', async function (req, res) {
+	res.json(0fjdsjkfdskj);
+});
+
+router.get('/analytics-atividade', async function (req, res) {
+	res.json(0fjdsjkfdskj);
+});
+
 router.get('/json-params-atividade', async function (req, res) {
 	res.json([
 			{"name": "instrucoesacesso", "type": "text/plain"},
