@@ -20,11 +20,11 @@ router.get('/', async function (req, res) {
 });
 
 router.get('/configuracao-atividade.html', async function (req, res) {
-	res.json(0fjdsjkfdskj);
+	res.json([{"Ola": "Mundo"}]);
 });
 
 router.get('/analytics-atividade', async function (req, res) {
-	res.json(0fjdsjkfdskj);
+	res.json([{"Ola": "Mundo"}]);
 });
 
 router.get('/json-params-atividade', async function (req, res) {
