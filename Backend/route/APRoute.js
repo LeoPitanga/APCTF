@@ -5,6 +5,7 @@ const activitiesData = require('../data/activitiesData');
 /* Ficheiro Registo (a saber se será provido pela API):
 {
 "name": "Capture The Flag",
+
 "config_url": "http://<domínio>/configuracao-atividade.html",
 OK!!!"json_params_url": "http:// <domínio>/json-para'ms-atividade",
 OK!!!(FALTA RETORNAR URL FRONTEND ESTUDANTE)"user_url": "http://<domínio>/deploy-atividade",
