@@ -4,7 +4,7 @@ const db = pgp({
 	password: '123321',
 	host: 'localhost',
 	port: 5432,
-	database: 'blog'
+	database: 'apctf'
 });
 
 module.exports = db;
