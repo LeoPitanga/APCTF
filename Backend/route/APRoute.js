@@ -16,15 +16,22 @@ OK!!!"analytics_list_url": "http://<domínio>/lista-analytics-atividade"
 */
 
 router.get('/', async function (req, res) {
-	res.end();
+	res.json({
+		"name": "Capture The Flag",
+		"config_url": "https://apctf.herokuapp.com/configuracao-atividade.html",
+		"json_params_url": "https://apctf.herokuapp.com/json-para'ms-atividade",
+		"user_url": "https://apctf.herokuapp.com/deploy-atividade",
+		"analytics_url": "https://apctf.herokuapp.com/analytics-atividade",
+		"analytics_list_url": "https://apctf.herokuapp.com/lista-analytics-atividade"
+		} );
 });
 
 router.get('/configuracao-atividade.html', async function (req, res) {
-	res.json([{"Ola": "Mundo"}]);
+	res.json("Página de Configuração Atividade");
 });
 
 router.get('/analytics-atividade', async function (req, res) {
-	res.json([{"Ola": "Mundo"}]);
+	res.json("Analytics Atividade");
 });
 
 router.get('/json-params-atividade', async function (req, res) {
@@ -71,32 +78,6 @@ router.post('/deploy-atividade/:activityID', async function (req, res) {
 	url1 = "http://localhost:3000/?ctf="+req.params.activityID+activityStudent.InveniRAstdID;
 	console.log(url1);
 	res.json({url: url1});
-});
-
-/* Backup
-router.get('/json-params-atividade', async function (req, res) {
-	const posts = await activitiesData.getPosts();
-	res.json(posts);
-});
-*/
-
-
-
-router.post('/posts', async function (req, res) {
-	const post = req.body;
-	const newPost = await activitiesData.savePost(post);
-	res.json(newPost);
-});
-
-router.put('/posts/:id', async function (req, res) {
-	const post = req.body;
-	await activitiesData.updatePost(req.params.id, post);
-	res.end();
-});
-
-router.delete('/posts/:id', async function (req, res) {
-	await activitiesData.deletePost(req.params.id);
-	res.end();
 });
 
 module.exports = router;
