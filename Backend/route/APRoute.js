@@ -56,7 +56,7 @@ router.get('/lista-analytics-atividade', async function (req, res) {
 		);
 });
 
-router.get('/analytics-atividade', async function (req, res) {
+router.post('/analytics-atividade', async function (req, res) {
 	const activityID = req.body.activityID;
 	//analytics = await activitiesData.getAnalytics(activityID);
 	res.json([
