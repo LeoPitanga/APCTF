@@ -63,7 +63,7 @@ router.get('/lista-analytics-atividade', async function (req, res) {
 router.post('/deploy-atividade', async function (req, res) {
 	const activity = req.body;
 	//console.log(activity.activityID);
-	const newActivity = await activitiesData.saveActivity(activity);
+	//const newActivity = await activitiesData.saveActivity(activity);
 	url1 = "http://localhost:3000/deploy-atividade/"+activity.activityID;
 	//console.log(activity.activityID)
 	//console.log({url: url1})
@@ -73,10 +73,10 @@ router.post('/deploy-atividade', async function (req, res) {
 router.post('/deploy-atividade/:activityID', async function (req, res) {
 	const activityStudent = req.body;
 	//console.log(activityStudent.activityID)
-	await activitiesData.saveStudent(activityStudent);
-	await activitiesData.updateActivity(req.params.activityID, activityStudent);
+	//await activitiesData.saveStudent(activityStudent);
+	//await activitiesData.updateActivity(req.params.activityID, activityStudent);
 	url1 = "http://localhost:3000/?ctf="+req.params.activityID+activityStudent.InveniRAstdID;
-	console.log(url1);
+	//console.log(url1);
 	res.json({url: url1});
 });
 
