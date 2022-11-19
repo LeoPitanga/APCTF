@@ -1,13 +1,5 @@
 const database = require('../infra/database');
 
-exports.getPosts = function () {
-	return database.query('select * from blog.post');
-};
-
-exports.getPost = function (id) {
-	return database.oneOrNone('select * from blog.post where id = $1', [id]);
-};
-
 exports.saveActivity = function (activity) {
 	return database.none('insert into apctf.activities(activity_id) values ($1)', [activity.activityID]);
 };
