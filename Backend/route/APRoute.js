@@ -19,7 +19,7 @@ router.get('/', async function (req, res) {
 	res.json({
 		"name": "Capture The Flag",
 		"config_url": "https://apctf.herokuapp.com/configuracao-atividade.html",
-		"json_params_url": "https://apctf.herokuapp.com/json-para'ms-atividade",
+		"json_params_url": "https://apctf.herokuapp.com/json-params-atividade",
 		"user_url": "https://apctf.herokuapp.com/deploy-atividade",
 		"analytics_url": "https://apctf.herokuapp.com/analytics-atividade",
 		"analytics_list_url": "https://apctf.herokuapp.com/lista-analytics-atividade"
