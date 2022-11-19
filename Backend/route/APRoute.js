@@ -30,10 +30,6 @@ router.get('/configuracao-atividade.html', async function (req, res) {
 	res.json("Página de Configuração Atividade");
 });
 
-router.get('/analytics-atividade', async function (req, res) {
-	res.json("Analytics Atividade");
-});
-
 router.get('/json-params-atividade', async function (req, res) {
 	res.json([
 			{"name": "instrucoesacesso", "type": "text/plain"},
@@ -58,6 +54,79 @@ router.get('/lista-analytics-atividade', async function (req, res) {
 			]
 		}
 		);
+});
+
+router.get('/analytics-atividade', async function (req, res) {
+	const activityID = req.body.activityID;
+	//analytics = await activitiesData.getAnalytics(activityID);
+	res.json([
+		{
+		  "inveniraStdID": 1001,
+		  "quantAnalytics": [
+			{
+			  "name": "acessoAtividade",
+			  "value": true
+			},
+			{
+			  "name": "acessoInstrucoes",
+			  "value": true
+			},
+			{
+			  "name": "acessoObjetivo",
+			  "value": true
+			},
+			{
+				"name": "acertouFlag",
+				"value": true
+			},
+			{
+				"name": "acessoDica1",
+				"value": true
+			},
+			{
+				"name": "acessoDica2",
+				"value": false
+			},
+			{
+				"name": "acessoDica3",
+				"value": false
+			}
+		  ]
+		},
+		{
+			"inveniraStdID": 1002,
+			"quantAnalytics": [
+			  {
+				"name": "acessoAtividade",
+				"value": true
+			  },
+			  {
+				"name": "acessoInstrucoes",
+				"value": true
+			  },
+			  {
+				"name": "acessoObjetivo",
+				"value": true
+			  },
+			  {
+				  "name": "acertouFlag",
+				  "value": false
+			  },
+			  {
+				  "name": "acessoDica1",
+				  "value": true
+			  },
+			  {
+				  "name": "acessoDica2",
+				  "value": true
+			  },
+			  {
+				  "name": "acessoDica3",
+				  "value": true
+			  }
+			]
+		}
+	]);
 });
 
 router.post('/deploy-atividade', async function (req, res) {
