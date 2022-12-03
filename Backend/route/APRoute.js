@@ -1,8 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const activitiesData = require('../data/activitiesData');
+//const activitiesData = require('../data/activitiesData');
+const databaseManager = require('../data/databaseManager');
 
-/* Ficheiro Registo (a saber se será provido pela API):
+const crypto = require('crypto');
+const generate = function () {
+	return crypto.randomBytes(20).toString('hex');
+};
+
+/* Ficheiro Registo:
 {
 "name": "Capture The Flag",
 
@@ -12,7 +18,6 @@ OK!!!(FALTA RETORNAR URL FRONTEND ESTUDANTE)"user_url": "http://<domínio>/deplo
 "analytics_url": "http://<domínio>/analytics-atividade",
 OK!!!"analytics_list_url": "http://<domínio>/lista-analytics-atividade"
 } 
-
 */
 
 router.get('/', async function (req, res) {
@@ -147,6 +152,25 @@ router.post('/deploy-atividade/:activityID', async function (req, res) {
 	url1 = "http://apctf.herokuapp.com/?ctf="+req.params.activityID+activityStudent.InveniRAstdID;
 	//console.log(url1);
 	res.json({url: url1});
+});
+
+router.get('/criarActivity', async function (req, res) {
+	const data = { 
+		activityID:generate(),
+		InveniRAstdID:generate(),
+		json_params:{
+		   "instrucoesacesso":"instrucoes",
+		   "instrucoesobjetivo":"objetivo",
+		   "flag":"g45hgh4th454hg45h6464u565756",
+		   "dica1":"Dica: Vá por ali",
+		   "dica2":"Dica: Vá por acolá",
+		   "dica3":"Dica: Não vá"
+		}
+	};
+	await databaseManager.saveActivity(data);
+	await databaseManager.saveStudent(data);
+	await databaseManager.updateActivity(data.activityID, data);
+	res.json("Foi!");
 });
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 const axios = require('axios');
-const activitiesData = require('../data/activitiesData');
+const activitiesData = require('../data/databaseManager');
 
 const generate = function () {
 	return crypto.randomBytes(20).toString('hex');
