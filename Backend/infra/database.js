@@ -1,5 +1,4 @@
 const pgp = require('pg-promise')();
-console.log(process.env.POSTGRES_URI);
 const PGCONNECTION_URI = process.env.POSTGRES_URI || 'postgres://postgres:123321@localhost:5432/apctf';
 
 const mongoose = require('mongoose');
@@ -8,7 +7,7 @@ const MGDBCONNECTION_URI = process.env.MONGODB_URI || 'mongodb://localhost/apctf
 mongoose.Promise = global.Promise;
 mongoose.set('debug',true);
 
-
+console.log(process.env.POSTGRES_URI);
 
 /*Prezados Professores, 
 
