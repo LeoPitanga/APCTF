@@ -1,4 +1,12 @@
 const pgp = require('pg-promise')();
+const PGCONNECTION_URI = process.env.POSTGRES_URI || 'postgres://postgres:123321@localhost:5432/apctf';
+
+const mongoose = require('mongoose');
+const MGDBCONNECTION_URI = process.env.MONGODB_URI || 'mongodb://localhost/apctf';
+
+mongoose.Promise = global.Promise;
+mongoose.set('debug',true);
+
 
 
 /*Prezados Professores, 
@@ -14,16 +22,26 @@ No entanto, se for possível dentro do tempo disponível, pretendo tentar migrar
 //Database Factory - Seria uma Abstract Class, caso o Javascript permitisse.
 class DatabaseManagerFactory {
 	//Factory Method - Retornaria objeto do tipo DatabaseManager, se o Javascript permitisse declarar o retorno do método.
-	getDatabaseManager(user1, password1, host1, port1, database1){};
+	getDatabaseManager(){};
 }
 
 
 //Postgres Factory - Concrete Class - herda de DatabaseManagerFactory.
 class PostgresManagerFactory {
 	//Factory Method - Retorna objeto do tipo PostgresManager, embora Javascript não permita declarar o tipo de retorno do método.
-	getDatabaseManager(user1, password1, host1, port1, database1){
+	getDatabaseManager(){
 		const postgresManager = new PostgresManager();
-		postgresManager.initiateDB(user1, password1, host1, port1, database1);
+		postgresManager.initiateDB();
+		return postgresManager;
+	};
+}
+
+//MongoDB Factory - Concrete Class - herda de DatabaseManagerFactory.
+class MongoDBManagerFactory {
+	//Factory Method - Retorna objeto do tipo PostgresManager, embora Javascript não permita declarar o tipo de retorno do método.
+	getDatabaseManager(){
+		const postgresManager = new PostgresManager();
+		postgresManager.initiateDB();
 		return postgresManager;
 	};
 }
@@ -32,7 +50,7 @@ class PostgresManagerFactory {
 //Abstract Product - Seria uma Interface, caso o Javascript permitisse.
 class DatabaseManager {
 
-	initiateDB(user1, password1, host1, port1, database1){};
+	initiateDB(){};
 	saveActivity (activity) {};
 	getActivityDetails (activity) {};
 	saveStudent (activityStudent) {};
@@ -47,14 +65,8 @@ class PostgresManager extends DatabaseManager {
 	
 	dtbase;
 
-	initiateDB(user1, password1, host1, port1, database1){
-		const db = pgp({
-			user: user1,
-			password: password1,
-			host: host1,
-			port: port1,
-			database: database1
-		});
+	initiateDB(){
+		const db = pgp(PGCONNECTION_URI);
 		this.dtbase = db;
 	}
 
@@ -91,9 +103,57 @@ class PostgresManager extends DatabaseManager {
 	};
 }
 
+
+class MongoDBManager extends DatabaseManager {
+	
+	dtbase;
+
+	initiateDB(){
+		mongoose.connect(MGDBCONNECTION_URI, {
+			useMongoClient: true
+		})
+		.catch(err => console.log(err));
+		this.dtbase = mongoose;
+	}
+
+	saveActivity (activity) {
+		//Desenvolver se necessário
+	};
+
+	getActivityDetails (activityID) {
+		//Desenvolver se necessário
+	};
+
+	saveStudent (activityStudent) {
+		//Desenvolver se necessário
+	};
+
+	getStudent (activityStudent) {
+		//Desenvolver se necessário
+	};
+
+	updateActivity (activityID, activityStudent) {
+		//Desenvolver se necessário
+	};
+
+	deleteActivity (activityID) {
+		//Desenvolver se necessário
+	};
+
+	getAnalytics(activityID){
+		//Desenvolver se necessário
+	};
+
+	saveAnalytics(analytics){
+		//Desenvolver se necessário
+	};
+}
+
 module.exports = {
 	DatabaseManagerFactory,
 	PostgresManagerFactory,
+	MongoDBManagerFactory,
 	DatabaseManager,
-	PostgresManager
+	PostgresManager,
+	MongoDBManager
 }
