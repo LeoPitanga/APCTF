@@ -80,7 +80,7 @@ class PostgresManager extends DatabaseManager {
 	};
 
 	saveStudent (activityStudent) {
-		return this.dtbase.none('insert into apctf.students(invenira_std_id,activity_id_fk,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) values ($1,$2,f,f,f,f,f,f,f)', [activityStudent.InveniRAstdID,activityStudent.activityID]);
+		return this.dtbase.none('insert into apctf.students(invenira_std_id,activity_id_fk,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) values ($1,$2,false,false,false,false,false,false,false)', [activityStudent.InveniRAstdID,activityStudent.activityID]);
 	};
 
 	getStudent (activityStudent) {
