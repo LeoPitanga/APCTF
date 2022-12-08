@@ -64,75 +64,26 @@ router.get('/lista-analytics-atividade', async function (req, res) {
 router.post('/analytics-atividade', async function (req, res) {
 	const activityID = req.body.activityID;
 	analytics = await databaseManager.getAnalytics(activityID);
-	res.json(analytics);
-	/* res.json([
-		{
-		  "inveniraStdID": 1001,
-		  "quantAnalytics": [
-			{
-			  "name": "acessoAtividade",
-			  "value": true
-			},
-			{
-			  "name": "acessoInstrucoes",
-			  "value": true
-			},
-			{
-			  "name": "acessoObjetivo",
-			  "value": true
-			},
-			{
-				"name": "acertouFlag",
-				"value": true
-			},
-			{
-				"name": "acessoDica1",
-				"value": true
-			},
-			{
-				"name": "acessoDica2",
-				"value": false
-			},
-			{
-				"name": "acessoDica3",
-				"value": false
-			}
-		  ]
-		},
-		{
-			"inveniraStdID": 1002,
-			"quantAnalytics": [
-			  {
-				"name": "acessoAtividade",
-				"value": true
-			  },
-			  {
-				"name": "acessoInstrucoes",
-				"value": true
-			  },
-			  {
-				"name": "acessoObjetivo",
-				"value": true
-			  },
-			  {
-				  "name": "acertouFlag",
-				  "value": false
-			  },
-			  {
-				  "name": "acessoDica1",
-				  "value": true
-			  },
-			  {
-				  "name": "acessoDica2",
-				  "value": true
-			  },
-			  {
-				  "name": "acessoDica3",
-				  "value": true
-			  }
-			]
-		}
-	]); */
+	let analyticsjson = [];
+	
+	for (var i = 0; i < analytics.length; i++) { 
+		inveniraStdID1 = analytics[i].row.replace('(',"").replace(')',"").split(",")[0];
+		acessoAtividade1 = (analytics[i].row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
+		acessoInstrucoes1 = (analytics[i].row.replace('(',"").replace(')',"").split(",")[2].replace('t','true').replace('f','false') === 'true');
+		acessoObjetivo1 = (analytics[i].row.replace('(',"").replace(')',"").split(",")[3].replace('t','true').replace('f','false') === 'true');
+		acertouFlag1 = (analytics[i].row.replace('(',"").replace(')',"").split(",")[4].replace('t','true').replace('f','false') === 'true');
+		acessoDica11 = (analytics[i].row.replace('(',"").replace(')',"").split(",")[5].replace('t','true').replace('f','false') === 'true');
+		acessoDica21 = (analytics[i].row.replace('(',"").replace(')',"").split(",")[6].replace('t','true').replace('f','false') === 'true');
+		acessoDica31 = (analytics[i].row.replace('(',"").replace(')',"").split(",")[7].replace('t','true').replace('f','false') === 'true');
+
+
+		analyticsjson.push({
+			inveniraStdID : inveniraStdID1,
+			quantAnalytics : [acessoAtividade1,acessoInstrucoes1,acessoObjetivo1,acertouFlag1,acessoDica11,acessoDica21,acessoDica31]
+		});
+	}
+	
+	res.json(analyticsjson);
 });
 
 router.post('/deploy-atividade', async function (req, res) {
