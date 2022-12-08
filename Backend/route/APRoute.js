@@ -139,7 +139,7 @@ router.post('/deploy-atividade', async function (req, res) {
 	const activity = req.body;
 	//console.log(activity.activityID);
 	await databaseManager.saveActivity(activity);
-	url1 = "http://apctf.herokuapp.com/deploy-atividade/"+activity.activityID;
+	url1 = "https://apctf.herokuapp.com/deploy-atividade/"+activity.activityID;
 	//console.log(activity.activityID)
 	//console.log({url: url1})
 	res.json({url: url1});
@@ -150,7 +150,7 @@ router.post('/deploy-atividade/:activityID', async function (req, res) {
 	//console.log(activityStudent.activityID)
 	await databaseManager.saveStudent(activityStudent);
 	await databaseManager.updateActivity(req.params.activityID, activityStudent);
-	url1 = "http://apctf.herokuapp.com/ctf/"+req.params.activityID+"/"+activityStudent.InveniRAstdID;
+	url1 = "https://apctf.herokuapp.com/ctf/"+req.params.activityID+"/"+activityStudent.InveniRAstdID;
 	//console.log(url1);
 	res.json({url: url1});
 });
