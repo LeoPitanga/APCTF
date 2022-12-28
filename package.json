@@ -5,7 +5,8 @@
   "main": "Backend/server.js",
   "scripts": {
     "test": "jest --env node",
-    "start": "node Backend/server.js"
+    "start": "node Backend/server.js",
+    "build": "tsc -p tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,11 @@
     "mongoose": "^6.8.0",
     "nodemon": "^2.0.20",
     "pg-promise": "^10.14.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.15",
+    "@types/node": "^18.11.18",
+    "@types/pg-promise": "^5.4.3",
+    "typescript": "^4.9.4"
   }
 }
