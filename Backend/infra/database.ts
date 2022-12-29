@@ -8,18 +8,6 @@ mongoose.Promise = global.Promise;
 mongoose.set('debug',true);
 
 
-/*
-############################
-Prezados Professores, 
-
-Descobri a pouco que a linguagem Javascript não possui todos os recursos necessários para representar corretamente o padrão Factory Method (classes abstratas e interfaces). (tive que aprender a programar para Web a partir do zero nesta UC. Tem sido um grande desafio, mas estou a chegar lá!)
-
-Diante do prazo de entrega do módulo 4 (amanhã - 04/12/2022), manterei o código em Javascript com os devidos comentários para representar a abstração necessária ao padrão de criação Factory Method. 
-No entanto, se for possível dentro do tempo disponível, pretendo tentar migrar o projeto inteiro para Typescript nos próximos módulos. Isto permitirá a correta representação dos Design Patterns.
-############################
-*/
-
-
 //Database Factory
 abstract class DatabaseManagerFactory {
 	//Factory Method - Retornaria objeto do tipo DatabaseManager, se o Javascript permitisse declarar o retorno do método.
