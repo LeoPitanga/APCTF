@@ -3,6 +3,6 @@ const DB = require('../infra/database');
 
 
 const postgresManagerFactory = new DB.PostgresManagerFactory();
-const postgresManager = postgresManagerFactory.getDatabaseManager();
+const postgresManager: PostgresManager = postgresManagerFactory.getDatabaseManager();
 
 module.exports = postgresManager;

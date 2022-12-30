@@ -1,7 +1,5 @@
-//const express1 = require('express');
 import express, { Request, Response, NextFunction } from 'express';
 const router = express.Router();
-//const activitiesData = require('../data/activitiesData');
 const databaseManager = require('../data/databaseManager');
 
 const crypto1 = require('crypto');
@@ -108,7 +106,7 @@ router.post('/deploy-atividade/:activityID', async function (req: Request, res: 
 });
 
 //FrontEnd - Migrar!
-router.get('/ctf/:activityID/:InveniRAstdID', async function (req: Request, res: Response) {
+/* router.get('/ctf/:activityID/:InveniRAstdID', async function (req: Request, res: Response) {
 	
 	console.log(req.params.activityID);
 	console.log(req.params.InveniRAstdID);
@@ -131,7 +129,7 @@ router.get('/ctf/:activityID/:InveniRAstdID', async function (req: Request, res:
 	await databaseManager.saveAnalytics(data);
 
 	res.json("Ok!");
-});
+}); */
 
 router.get('/criarActivity', async function (req: Request, res: Response) {
 	const data = { 

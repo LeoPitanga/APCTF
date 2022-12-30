@@ -5,16 +5,6 @@ const mongoose = require('mongoose');
 const MGDBCONNECTION_URI = process.env.MONGODB_URI || 'mongodb://localhost/apctf';
 mongoose.Promise = global.Promise;
 mongoose.set('debug', true);
-/*
-############################
-Prezados Professores,
-
-Descobri a pouco que a linguagem Javascript não possui todos os recursos necessários para representar corretamente o padrão Factory Method (classes abstratas e interfaces). (tive que aprender a programar para Web a partir do zero nesta UC. Tem sido um grande desafio, mas estou a chegar lá!)
-
-Diante do prazo de entrega do módulo 4 (amanhã - 04/12/2022), manterei o código em Javascript com os devidos comentários para representar a abstração necessária ao padrão de criação Factory Method.
-No entanto, se for possível dentro do tempo disponível, pretendo tentar migrar o projeto inteiro para Typescript nos próximos módulos. Isto permitirá a correta representação dos Design Patterns.
-############################
-*/
 //Database Factory
 class DatabaseManagerFactory {
     //Factory Method - Retornaria objeto do tipo DatabaseManager, se o Javascript permitisse declarar o retorno do método.
@@ -55,6 +45,30 @@ class PostgresManager {
         return this.dtbase.oneOrNone('select * from apctf.activities where activity_id = $1', [activityID]);
     }
     ;
+    getActivityInstructions(activityID) {
+        return this.dtbase.oneOrNone('select instrucoesacesso from apctf.activities where activity_id = $1', [activityID]);
+    }
+    ;
+    getActivityObjective(activityID) {
+        return this.dtbase.oneOrNone('select instrucoesobjetivo from apctf.activities where activity_id = $1', [activityID]);
+    }
+    ;
+    getActivityFlag(activityID) {
+        return this.dtbase.oneOrNone('select act_flag from apctf.activities where activity_id = $1', [activityID]);
+    }
+    ;
+    getActivityDica1(activityID) {
+        return this.dtbase.oneOrNone('select dica1 from apctf.activities where activity_id = $1', [activityID]);
+    }
+    ;
+    getActivityDica2(activityID) {
+        return this.dtbase.oneOrNone('select dica2 from apctf.activities where activity_id = $1', [activityID]);
+    }
+    ;
+    getActivityDica3(activityID) {
+        return this.dtbase.oneOrNone('select dica3 from apctf.activities where activity_id = $1', [activityID]);
+    }
+    ;
     saveStudent(activityStudent) {
         return this.dtbase.none('insert into apctf.students(invenira_std_id,activity_id_fk,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) values ($1,$2,false,false,false,false,false,false,false)', [activityStudent.InveniRAstdID, activityStudent.activityID]);
     }
@@ -79,9 +93,31 @@ class PostgresManager {
         return this.dtbase.none('update apctf.students set acessoatividade = $1, acessoinstrucoes = $2, acessoobjetivo = $3, acertouflag = $4, acessodica1 = $5, acessodica2 = $6, acessodica3 = $7 where invenira_std_id = $8 and activity_id_fk = $9', [analytics.json_params.acessoatividade, analytics.json_params.acessoinstrucoes, analytics.json_params.acessoobjetivo, analytics.json_params.acertouflag, analytics.json_params.acessodica1, analytics.json_params.acessodica2, analytics.json_params.acessodica3, analytics.InveniRAstdID, analytics.activityID]);
     }
     ;
+    activityAccess(activityID, inveniraStdID) {
+        return this.dtbase.none('update apctf.students set acessoatividade = true where activity_id_fk = $1 AND invenira_std_id = $2', [activityID, inveniraStdID]);
+    }
+    ;
 }
 //Concrete Product MongoDB - Implementa a Interface DatabaseManager.
 class MongoDBManager {
+    getActivityInstructions(activity) {
+        throw new Error("Method not implemented.");
+    }
+    getActivityObjective(activity) {
+        throw new Error("Method not implemented.");
+    }
+    getActivityFlag(activity) {
+        throw new Error("Method not implemented.");
+    }
+    getActivityDica1(activity) {
+        throw new Error("Method not implemented.");
+    }
+    getActivityDica2(activity) {
+        throw new Error("Method not implemented.");
+    }
+    getActivityDica3(activity) {
+        throw new Error("Method not implemented.");
+    }
     initiateDB() {
         mongoose.connect(MGDBCONNECTION_URI, {
             useMongoClient: true
@@ -120,6 +156,9 @@ class MongoDBManager {
         //Desenvolver se necessário
     }
     ;
+    activityAccess(activityID, activityStudent) {
+        //Desenvolver se necessário
+    }
 }
 module.exports = {
     DatabaseManagerFactory,

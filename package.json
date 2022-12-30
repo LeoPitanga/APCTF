@@ -2,11 +2,12 @@
   "name": "apctf",
   "version": "1.0.0",
   "description": "",
-  "main": "Backend/server.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest --env node",
-    "start": "node Backend/server.js",
-    "build": "tsc -p tsconfig.json"
+    "start": "node server.js",
+    "build": "tsc -p tsconfig.json",
+    "ts-node": "ts-node server.ts"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,8 @@
     "jest": "^29.3.1",
     "mongoose": "^6.8.0",
     "nodemon": "^2.0.20",
-    "pg-promise": "^10.14.1"
+    "pg-promise": "^10.14.1",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.15",

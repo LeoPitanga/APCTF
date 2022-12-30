@@ -12,10 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-//const express1 = require('express');
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
-//const activitiesData = require('../data/activitiesData');
 const databaseManager = require('../data/databaseManager');
 const crypto1 = require('crypto');
 const generate = function () {
@@ -121,29 +119,30 @@ router.post('/deploy-atividade/:activityID', function (req, res) {
     });
 });
 //FrontEnd - Migrar!
-router.get('/ctf/:activityID/:InveniRAstdID', function (req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        console.log(req.params.activityID);
-        console.log(req.params.InveniRAstdID);
-        console.log(yield databaseManager.getActivityDetails(req.params.activityID));
-        const data = {
-            "activityID": req.params.activityID,
-            "InveniRAstdID": req.params.InveniRAstdID,
-            "json_params": {
-                "acessoatividade": true,
-                "acessoinstrucoes": true,
-                "acessoobjetivo": true,
-                "acertouflag": false,
-                "acessodica1": false,
-                "acessodica2": false,
-                "acessodica3": false,
-            }
-        };
-        //console.log(data);
-        yield databaseManager.saveAnalytics(data);
-        res.json("Ok!");
-    });
-});
+/* router.get('/ctf/:activityID/:InveniRAstdID', async function (req: Request, res: Response) {
+    
+    console.log(req.params.activityID);
+    console.log(req.params.InveniRAstdID);
+    console.log(await databaseManager.getActivityDetails(req.params.activityID));
+
+    const data = {
+        "activityID":req.params.activityID,
+        "InveniRAstdID":req.params.InveniRAstdID,
+        "json_params":{
+           "acessoatividade":true,
+           "acessoinstrucoes":true,
+           "acessoobjetivo":true,
+           "acertouflag":false,
+           "acessodica1":false,
+           "acessodica2":false,
+           "acessodica3":false,
+        }
+    };
+    //console.log(data);
+    await databaseManager.saveAnalytics(data);
+
+    res.json("Ok!");
+}); */
 router.get('/criarActivity', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const data = {
