@@ -38,7 +38,7 @@ class frontFacade {
             
             if (acessoInstrucoes) {instrucoes = informacoes.instrucoesacesso;};
             if (acessoObjetivo) {objetivo = informacoes.instrucoesobjetivo;};
-            if (acertouFlag) {flag = "PARABÉNS!!! A FLAG INFORMADA ESTÁ CORRETA ( "+informacoes.act_flag+" )";};
+            if (acertouFlag) {flag = "PARABÉNS!!! A FLAG INFORMADA ESTÁ CORRETA!!!";};
             if (acessoDica1) {dica1 = informacoes.dica1;};
             if (acessoDica2) {dica2 = informacoes.dica2;};
             if (acessoDica3) {dica3 = informacoes.dica3;};
@@ -121,7 +121,7 @@ class frontFacade {
             
             if (acessoInstrucoes) {instrucoes = informacoes.instrucoesacesso;};
             if (acessoObjetivo) {objetivo = informacoes.instrucoesobjetivo;};
-            if (acertouFlag) {flag = "PARABÉNS!!! A FLAG INFORMADA ESTÁ CORRETA ( "+informacoes.act_flag+" )";};
+            if (acertouFlag) {flag = "PARABÉNS!!! A FLAG INFORMADA ESTÁ CORRETA!!!";};
             if (acessoDica1) {dica1 = informacoes.dica1;};
             if (acessoDica2) {dica2 = informacoes.dica2;};
             if (acessoDica3) {dica3 = informacoes.dica3;};

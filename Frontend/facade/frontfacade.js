@@ -49,7 +49,7 @@ class frontFacade {
                 }
                 ;
                 if (acertouFlag) {
-                    flag = "PARABÉNS!!! A FLAG INFORMADA ESTÁ CORRETA ( " + informacoes.act_flag + " )";
+                    flag = "PARABÉNS!!! A FLAG INFORMADA ESTÁ CORRETA!!!";
                 }
                 ;
                 if (acessoDica1) {
@@ -148,7 +148,7 @@ class frontFacade {
                 }
                 ;
                 if (acertouFlag) {
-                    flag = "PARABÉNS!!! A FLAG INFORMADA ESTÁ CORRETA ( " + informacoes.act_flag + " )";
+                    flag = "PARABÉNS!!! A FLAG INFORMADA ESTÁ CORRETA!!!";
                 }
                 ;
                 if (acessoDica1) {
