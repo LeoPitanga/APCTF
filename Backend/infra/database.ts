@@ -53,12 +53,18 @@ interface DatabaseManager {
 	updateActivity (activityID: any, activityStudent: any): any;
 	getAnalytics(activityID: any): any;
 	saveAnalytics(analytics: any): any;
-	activityAccess(activityID: any, activityStudent: any): any;
+	getactivityAccess(activityID: any, activityStudent: any): any;
+	setStudentActivityInstructions (activityID: any, InveniRAstdID: any): any;
+	setStudentActivityObjective (activityID: any, InveniRAstdID: any): any;
+	setStudentActivityFlag (activityID: any, InveniRAstdID: any, flag: any): any;
+	setStudentActivityDica1 (activityID: any, InveniRAstdID: any): any;
+	setStudentActivityDica2 (activityID: any, InveniRAstdID: any): any;
+	setStudentActivityDica3 (activityID: any, InveniRAstdID: any): any;
 }
 
 //Concrete Product Postgres - Implementa a Interface DatabaseManager.
 class PostgresManager implements DatabaseManager {
-	
+		
 	dtbase: any;
 
 	initiateDB(){
@@ -122,9 +128,28 @@ class PostgresManager implements DatabaseManager {
 		return this.dtbase.none('update apctf.students set acessoatividade = $1, acessoinstrucoes = $2, acessoobjetivo = $3, acertouflag = $4, acessodica1 = $5, acessodica2 = $6, acessodica3 = $7 where invenira_std_id = $8 and activity_id_fk = $9', [analytics.json_params.acessoatividade, analytics.json_params.acessoinstrucoes, analytics.json_params.acessoobjetivo, analytics.json_params.acertouflag, analytics.json_params.acessodica1, analytics.json_params.acessodica2, analytics.json_params.acessodica3, analytics.InveniRAstdID, analytics.activityID]);
 	};
 
-	activityAccess (activityID: any, inveniraStdID: any) {
+	getactivityAccess (activityID: any, inveniraStdID: any) {
 		return this.dtbase.none('update apctf.students set acessoatividade = true where activity_id_fk = $1 AND invenira_std_id = $2', [activityID, inveniraStdID]);
 	};
+
+	setStudentActivityInstructions(activityID: any, InveniRAstdID: any) {
+		return this.dtbase.none('update apctf.students set acessoinstrucoes = true where activity_id_fk = $1 and invenira_std_id = $2', [activityID, InveniRAstdID]);
+	}
+	setStudentActivityObjective(activityID: any, InveniRAstdID: any) {
+		return this.dtbase.none('update apctf.students set acessoobjetivo = true where activity_id_fk = $1 and invenira_std_id = $2', [activityID, InveniRAstdID]);
+	}
+	setStudentActivityFlag(activityID: any, InveniRAstdID: any, flag: any) {
+		return this.dtbase.none('update apctf.students set acertouflag = true where activity_id_fk = $1 and invenira_std_id = $2', [activityID, InveniRAstdID]);
+	}
+	setStudentActivityDica1(activityID: any, InveniRAstdID: any) {
+		return this.dtbase.none('update apctf.students set acessodica1 = true where activity_id_fk = $1 and invenira_std_id = $2', [activityID, InveniRAstdID]);
+	}
+	setStudentActivityDica2(activityID: any, InveniRAstdID: any) {
+		return this.dtbase.none('update apctf.students set acessodica2 = true where activity_id_fk = $1 and invenira_std_id = $2', [activityID, InveniRAstdID]);
+	}
+	setStudentActivityDica3(activityID: any, InveniRAstdID: any) {
+		return this.dtbase.none('update apctf.students set acessodica3 = true where activity_id_fk = $1 and invenira_std_id = $2', [activityID, InveniRAstdID]);
+	}
 }
 
 
@@ -148,6 +173,26 @@ class MongoDBManager implements DatabaseManager {
 	getActivityDica3(activity: any) {
 		throw new Error("Method not implemented.");
 	}
+	setStudentActivityInstructions(activityID: any, InveniRAstdID: any) {
+		throw new Error("Method not implemented.");
+	}
+	setStudentActivityObjective(activityID: any, InveniRAstdID: any) {
+		throw new Error("Method not implemented.");
+	}
+	setStudentActivityFlag(activityID: any, InveniRAstdID: any, flag: any) {
+		throw new Error("Method not implemented.");
+	}
+	setStudentActivityDica1(activityID: any, InveniRAstdID: any) {
+		throw new Error("Method not implemented.");
+	}
+	setStudentActivityDica2(activityID: any, InveniRAstdID: any) {
+		throw new Error("Method not implemented.");
+	}
+	setStudentActivityDica3(activityID: any, InveniRAstdID: any) {
+		throw new Error("Method not implemented.");
+	}
+	
+	
 	
 	
 	dtbase: any;
@@ -191,7 +236,7 @@ class MongoDBManager implements DatabaseManager {
 		//Desenvolver se necessário
 	};
 
-	activityAccess(activityID: any, activityStudent: any) {
+	getactivityAccess(activityID: any, activityStudent: any) {
 		//Desenvolver se necessário
 	}
 }
