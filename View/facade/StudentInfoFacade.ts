@@ -5,14 +5,15 @@ const databaseManager = require('../../API/data/databaseManager');
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 PREZADOS PROFESSORES, ATENÇÃO, por gentileza!!! 
+
 Somente ao revisar a minha pretensa implementação do padrão FACADE percebi que incorri em dois erros que provavelmente invalidam o padrão:
 
 1) A Facade implementada trata apenas de um subsistema (DatabaseManager). Ao revisar o padrão, percebi que é esperado que haja interação do Facade com vários subsistemas (acho que esse ponto até que poderia não invalidar a implementação do padrão, mas certamente o descaracteriza um tanto).
 2) Segundo o GoF, a Facade não deve implementar novas funcionalidades. Este é o principal erro que, ao meu ver, invalida a implementação do padrão no meu projeto, uma vez que a minha pretensa FACADE realiza operações de validação de dados e preenchimento de informações padrão.
 
-Deste modo, manterei no código a equivocada implementação do padrão apenas para fins de eventual verificação/curiosidade dos Senhores, mas peço que ****ignorem para efeitos de correção da atividade 5****.
+Deste modo, manterei no código a, salvo engano, equivocada implementação do padrão apenas para fins de eventual verificação/curiosidade dos Senhores, mas peço que **** a ignorem para efeitos de correção da atividade 5****.
 
-O Padrão de Estrutura que efetivamente enviarei para correção é o Adapter, por meio da classe PostgresManager, que implementa a interface DatabaseManager.
+O Padrão de Estrutura que efetivamente enviarei para correção é o Adapter, por meio da classe PostgresManager, que implementa a interface DatabaseManager (encontrado no arquivo /API/infra/database.ts).
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 

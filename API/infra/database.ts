@@ -37,7 +37,7 @@ class MongoDBManagerFactory extends DatabaseManagerFactory {
 
 
 //Abstract Product - Interface. Padrão Factory Method
-//Client Interface - Interface de comunicação de bancos de dados com o código Client (API). Por meio do padrão Adapter, classes que implementem esta interface serão Adaptadores para comunicação com os serviços de banco de dados com a API (cliente).
+//PADRÃO DE ESTRUTURA ADAPTER - Client Interface - Interface de comunicação de bancos de dados com o código Client (API). Por meio do padrão Adapter, classes que implementem esta interface serão Adaptadores para comunicação com os serviços de banco de dados com a API (cliente).
 interface DatabaseManager {
 
 	initiateDB():any;
