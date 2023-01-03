@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const databaseManager = require('../../API/data/databaseManager');
-//Implementação do Padrão de Estrutura "FACADE" de forma a facilitar a obtenção/persistência/validação de dados analíticos de um estudante em determinada atividade do Inven!RA por meio da view (FrontEnd) do Aluno (View).
+//Implementação do Padrão de Estrutura "FACADE" de forma a facilitar a obtenção/persistência/validação de dados analíticos de um estudante em determinada atividade do Inven!RA para utilização na view/frontend de interação do AP com o estudante.
 class StudentInfoFacade {
     //checa o status atual dos analytics do estudante e retorna as informações relacionadas ao último estado.
     getStudentActivity(activityID, InveniRAstdID) {
