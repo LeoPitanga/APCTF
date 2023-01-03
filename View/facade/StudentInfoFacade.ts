@@ -1,9 +1,8 @@
 
-//Substituir por chamadas à API/BACKEND.
-const databaseManager = require('../../Backend/data/databaseManager');
+const databaseManager = require('../../API/data/databaseManager');
 
-
-class frontFacade {
+//Implementação do Padrão de Estrutura "FACADE" de forma a facilitar a obtenção/persistência de dados analíticos de um estudante em determinada atividade do Inven!RA por meio da view (FrontEnd) do Aluno (View).
+class StudentInfoFacade {
     
     //checa o status atual dos analytics do estudante e retorna as informações relacionadas ao último estado.
     async getStudentActivity(activityID: string, InveniRAstdID: string): Promise<any>{
@@ -29,9 +28,9 @@ class frontFacade {
                 
         //atualiza Analytics de "Acesso Atividade", caso seja o primeiro acesso.
         if (!acessoAtividade){
-            await databaseManager.getactivityAccess(activityID,InveniRAstdID);
-            studentInformation = await databaseManager.getStudent({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
-            acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
+            await databaseManager.setactivityAccess(activityID,InveniRAstdID);
+            //studentInformation = await databaseManager.getStudent({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
+            //acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
         }else {
             //buscar informações da atividade, a depender das informações do estudante (se já visualizou as informações e/ou se já acertou a flag)
             let informacoes = await databaseManager.getActivityDetails(activityID);
@@ -60,7 +59,7 @@ class frontFacade {
     };
 
     //
-    async setStudentActivity(activityID: string, InveniRAstdID: string, analytics: any): Promise<any>{
+    async setStudentActivity(activityID: string, InveniRAstdID: string, action: any): Promise<any>{
         //checar se estudante está ativo
         //buscar informações do estudante
         let studentInformation = await databaseManager.getStudent({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
@@ -84,13 +83,13 @@ class frontFacade {
         //atualiza Analytics de "Acesso Atividade", caso seja o primeiro acesso.
         if (!acessoAtividade){
             await databaseManager.getactivityAccess(activityID,InveniRAstdID);
-            studentInformation = await databaseManager.getStudent({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
-            acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
+            //studentInformation = await databaseManager.getStudent({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
+            //acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
         }else {
             //buscar informações da atividade, a depender das informações do estudante (se já visualizou as informações e/ou se já acertou a flag)
             let informacoes = await databaseManager.getActivityDetails(activityID);
 
-            switch (analytics.tipo) {
+            switch (action.tipo) {
                 case "instructionsBtt":
                     await databaseManager.setStudentActivityInstructions(activityID,InveniRAstdID);
                     acessoInstrucoes = true;
@@ -100,8 +99,8 @@ class frontFacade {
                     acessoObjetivo = true;
                     break;
                 case "enviarFlagBtt":
-                    if (analytics.flag === informacoes.act_flag) {
-                        await databaseManager.setStudentActivityFlag(activityID,InveniRAstdID,analytics.flag);
+                    if (action.flag === informacoes.act_flag) {
+                        await databaseManager.setStudentActivityFlag(activityID,InveniRAstdID,action.flag);
                         acertouFlag = true;
                     }
                     break;
@@ -144,4 +143,4 @@ class frontFacade {
 };
 
 
-module.exports = frontFacade;
+module.exports = StudentInfoFacade;

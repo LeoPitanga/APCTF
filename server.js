@@ -12,8 +12,8 @@ app.use(body_parser_1.default.urlencoded({
     extended: true
 }));
 //Backend
-app.use('/', require('./Backend/route/APRoute'));
+app.use('/', require('./API/route/APRoute'));
 //Frontend
-app.use('/ctf/', require('./Frontend/route/FERoute'));
+app.use('/ctf/', require('./View/route/FERoute'));
 //app.use(express.static(__dirname + "\\Frontend\\route"));
 app.listen(process.env.PORT || 3000);

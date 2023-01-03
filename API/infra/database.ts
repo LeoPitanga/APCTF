@@ -53,7 +53,7 @@ interface DatabaseManager {
 	updateActivity (activityID: any, activityStudent: any): any;
 	getAnalytics(activityID: any): any;
 	saveAnalytics(analytics: any): any;
-	getactivityAccess(activityID: any, activityStudent: any): any;
+	setActivityAccess(activityID: any, activityStudent: any): any;
 	setStudentActivityInstructions (activityID: any, InveniRAstdID: any): any;
 	setStudentActivityObjective (activityID: any, InveniRAstdID: any): any;
 	setStudentActivityFlag (activityID: any, InveniRAstdID: any, flag: any): any;
@@ -128,7 +128,7 @@ class PostgresManager implements DatabaseManager {
 		return this.dtbase.none('update apctf.students set acessoatividade = $1, acessoinstrucoes = $2, acessoobjetivo = $3, acertouflag = $4, acessodica1 = $5, acessodica2 = $6, acessodica3 = $7 where invenira_std_id = $8 and activity_id_fk = $9', [analytics.json_params.acessoatividade, analytics.json_params.acessoinstrucoes, analytics.json_params.acessoobjetivo, analytics.json_params.acertouflag, analytics.json_params.acessodica1, analytics.json_params.acessodica2, analytics.json_params.acessodica3, analytics.InveniRAstdID, analytics.activityID]);
 	};
 
-	getactivityAccess (activityID: any, inveniraStdID: any) {
+	setActivityAccess (activityID: any, inveniraStdID: any) {
 		return this.dtbase.none('update apctf.students set acessoatividade = true where activity_id_fk = $1 AND invenira_std_id = $2', [activityID, inveniraStdID]);
 	};
 
@@ -155,6 +155,9 @@ class PostgresManager implements DatabaseManager {
 
 //Concrete Product MongoDB - Implementa a Interface DatabaseManager.
 class MongoDBManager implements DatabaseManager {
+	setActivityAccess(activityID: any, activityStudent: any) {
+		throw new Error("Method not implemented.");
+	}
 	getActivityInstructions(activity: any) {
 		throw new Error("Method not implemented.");
 	}
@@ -236,9 +239,6 @@ class MongoDBManager implements DatabaseManager {
 		//Desenvolver se necessário
 	};
 
-	getactivityAccess(activityID: any, activityStudent: any) {
-		//Desenvolver se necessário
-	}
 }
 
 module.exports = {

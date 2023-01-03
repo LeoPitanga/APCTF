@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-//Substituir por chamadas à API/BACKEND.
-const databaseManager = require('../../Backend/data/databaseManager');
-class frontFacade {
+const databaseManager = require('../../API/data/databaseManager');
+//Implementação do Padrão de Estrutura "FACADE" de forma a facilitar a obtenção/persistência de dados analíticos de um estudante em determinada atividade do Inven!RA por meio da view (FrontEnd) do Aluno (View).
+class StudentInfoFacade {
     //checa o status atual dos analytics do estudante e retorna as informações relacionadas ao último estado.
     getStudentActivity(activityID, InveniRAstdID) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -33,9 +33,9 @@ class frontFacade {
             let dica3 = "Para visualizar a terceira dica, clique no botão 'Ler Dica 3'";
             //atualiza Analytics de "Acesso Atividade", caso seja o primeiro acesso.
             if (!acessoAtividade) {
-                yield databaseManager.getactivityAccess(activityID, InveniRAstdID);
-                studentInformation = yield databaseManager.getStudent({ "activityID": activityID, "InveniRAstdID": InveniRAstdID });
-                acessoAtividade = (studentInformation.row.replace('(', "").replace(')', "").split(",")[1].replace('t', 'true').replace('f', 'false') === 'true');
+                yield databaseManager.setactivityAccess(activityID, InveniRAstdID);
+                //studentInformation = await databaseManager.getStudent({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
+                //acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
             }
             else {
                 //buscar informações da atividade, a depender das informações do estudante (se já visualizou as informações e/ou se já acertou a flag)
@@ -83,7 +83,7 @@ class frontFacade {
     }
     ;
     //
-    setStudentActivity(activityID, InveniRAstdID, analytics) {
+    setStudentActivity(activityID, InveniRAstdID, action) {
         return __awaiter(this, void 0, void 0, function* () {
             //checar se estudante está ativo
             //buscar informações do estudante
@@ -105,13 +105,13 @@ class frontFacade {
             //atualiza Analytics de "Acesso Atividade", caso seja o primeiro acesso.
             if (!acessoAtividade) {
                 yield databaseManager.getactivityAccess(activityID, InveniRAstdID);
-                studentInformation = yield databaseManager.getStudent({ "activityID": activityID, "InveniRAstdID": InveniRAstdID });
-                acessoAtividade = (studentInformation.row.replace('(', "").replace(')', "").split(",")[1].replace('t', 'true').replace('f', 'false') === 'true');
+                //studentInformation = await databaseManager.getStudent({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
+                //acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
             }
             else {
                 //buscar informações da atividade, a depender das informações do estudante (se já visualizou as informações e/ou se já acertou a flag)
                 let informacoes = yield databaseManager.getActivityDetails(activityID);
-                switch (analytics.tipo) {
+                switch (action.tipo) {
                     case "instructionsBtt":
                         yield databaseManager.setStudentActivityInstructions(activityID, InveniRAstdID);
                         acessoInstrucoes = true;
@@ -121,8 +121,8 @@ class frontFacade {
                         acessoObjetivo = true;
                         break;
                     case "enviarFlagBtt":
-                        if (analytics.flag === informacoes.act_flag) {
-                            yield databaseManager.setStudentActivityFlag(activityID, InveniRAstdID, analytics.flag);
+                        if (action.flag === informacoes.act_flag) {
+                            yield databaseManager.setStudentActivityFlag(activityID, InveniRAstdID, action.flag);
                             acertouFlag = true;
                         }
                         break;
@@ -183,4 +183,4 @@ class frontFacade {
     ;
 }
 ;
-module.exports = frontFacade;
+module.exports = StudentInfoFacade;
