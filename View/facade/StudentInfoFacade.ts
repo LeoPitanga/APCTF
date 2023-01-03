@@ -15,7 +15,7 @@ interface StudentInfoFacadeInterface {
     setStudentActivity(activityID: string, InveniRAstdID: string, action: any): Promise<any>;
 }
 
-//Classe que implementa a interface do padrão facade
+//Classe que implementa a interface da Facade
 class StudentInfoFacade implements StudentInfoFacadeInterface {
     
     //checa o status atual dos analytics do estudante e retorna as informações relacionadas ao último estado.
