@@ -49,11 +49,11 @@ interface DatabaseManager {
 	getActivityDica2 (activity: any): any;
 	getActivityDica3 (activity: any): any;
 	saveStudent (activityStudent: any): any;
-	getStudent (activityStudent: any): any;
+	getStudentAnalytics (activityStudent: any): any;
 	updateActivity (activityID: any, activityStudent: any): any;
 	getAnalytics(activityID: any): any;
 	saveAnalytics(analytics: any): any;
-	setActivityAccess(activityID: any, activityStudent: any): any;
+	setStudentActivityAccess(activityID: any, activityStudent: any): any;
 	setStudentActivityInstructions (activityID: any, InveniRAstdID: any): any;
 	setStudentActivityObjective (activityID: any, InveniRAstdID: any): any;
 	setStudentActivityFlag (activityID: any, InveniRAstdID: any, flag: any): any;
@@ -108,7 +108,7 @@ class PostgresManager implements DatabaseManager {
 		return this.dtbase.none('insert into apctf.students(invenira_std_id,activity_id_fk,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) values ($1,$2,false,false,false,false,false,false,false)', [activityStudent.InveniRAstdID,activityStudent.activityID]);
 	};
 
-	getStudent (activityStudent: any) {
+	getStudentAnalytics (activityStudent: any) {
 		return this.dtbase.oneOrNone('select (invenira_std_id,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) from apctf.students where invenira_std_id = $1 and activity_id_fk = $2', [activityStudent.InveniRAstdID,activityStudent.activityID]);
 	};
 
@@ -128,7 +128,7 @@ class PostgresManager implements DatabaseManager {
 		return this.dtbase.none('update apctf.students set acessoatividade = $1, acessoinstrucoes = $2, acessoobjetivo = $3, acertouflag = $4, acessodica1 = $5, acessodica2 = $6, acessodica3 = $7 where invenira_std_id = $8 and activity_id_fk = $9', [analytics.json_params.acessoatividade, analytics.json_params.acessoinstrucoes, analytics.json_params.acessoobjetivo, analytics.json_params.acertouflag, analytics.json_params.acessodica1, analytics.json_params.acessodica2, analytics.json_params.acessodica3, analytics.InveniRAstdID, analytics.activityID]);
 	};
 
-	setActivityAccess (activityID: any, inveniraStdID: any) {
+	setStudentActivityAccess (activityID: any, inveniraStdID: any) {
 		return this.dtbase.none('update apctf.students set acessoatividade = true where activity_id_fk = $1 AND invenira_std_id = $2', [activityID, inveniraStdID]);
 	};
 
@@ -155,7 +155,7 @@ class PostgresManager implements DatabaseManager {
 
 //Concrete Product MongoDB - Implementa a Interface DatabaseManager.
 class MongoDBManager implements DatabaseManager {
-	setActivityAccess(activityID: any, activityStudent: any) {
+	setStudentActivityAccess(activityID: any, activityStudent: any) {
 		throw new Error("Method not implemented.");
 	}
 	getActivityInstructions(activity: any) {
@@ -219,7 +219,7 @@ class MongoDBManager implements DatabaseManager {
 		//Desenvolver se necessário
 	};
 
-	getStudent (activityStudent: any) {
+	getStudentAnalytics (activityStudent: any) {
 		//Desenvolver se necessário
 	};
 

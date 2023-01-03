@@ -1,14 +1,14 @@
 
 const databaseManager = require('../../API/data/databaseManager');
 
-//Implementação do Padrão de Estrutura "FACADE" de forma a facilitar a obtenção/persistência de dados analíticos de um estudante em determinada atividade do Inven!RA por meio da view (FrontEnd) do Aluno (View).
+//Implementação do Padrão de Estrutura "FACADE" de forma a facilitar a obtenção/persistência/validação de dados analíticos de um estudante em determinada atividade do Inven!RA por meio da view (FrontEnd) do Aluno (View).
 class StudentInfoFacade {
     
     //checa o status atual dos analytics do estudante e retorna as informações relacionadas ao último estado.
     async getStudentActivity(activityID: string, InveniRAstdID: string): Promise<any>{
         //checar se estudante está ativo
         //buscar informações do estudante
-        let studentInformation = await databaseManager.getStudent({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
+        let studentInformation = await databaseManager.getStudentAnalytics({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
 
 		let acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
 		let acessoInstrucoes = (studentInformation.row.replace('(',"").replace(')',"").split(",")[2].replace('t','true').replace('f','false') === 'true');
@@ -28,8 +28,8 @@ class StudentInfoFacade {
                 
         //atualiza Analytics de "Acesso Atividade", caso seja o primeiro acesso.
         if (!acessoAtividade){
-            await databaseManager.setactivityAccess(activityID,InveniRAstdID);
-            //studentInformation = await databaseManager.getStudent({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
+            await databaseManager.setStudentActivityAccess(activityID,InveniRAstdID);
+            //studentInformation = await databaseManager.getStudentAnalytics({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
             //acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
         }else {
             //buscar informações da atividade, a depender das informações do estudante (se já visualizou as informações e/ou se já acertou a flag)
@@ -62,7 +62,7 @@ class StudentInfoFacade {
     async setStudentActivity(activityID: string, InveniRAstdID: string, action: any): Promise<any>{
         //checar se estudante está ativo
         //buscar informações do estudante
-        let studentInformation = await databaseManager.getStudent({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
+        let studentInformation = await databaseManager.getStudentAnalytics({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
 
 		let acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
 		let acessoInstrucoes = (studentInformation.row.replace('(',"").replace(')',"").split(",")[2].replace('t','true').replace('f','false') === 'true');
@@ -82,8 +82,8 @@ class StudentInfoFacade {
                 
         //atualiza Analytics de "Acesso Atividade", caso seja o primeiro acesso.
         if (!acessoAtividade){
-            await databaseManager.getactivityAccess(activityID,InveniRAstdID);
-            //studentInformation = await databaseManager.getStudent({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
+            await databaseManager.setStudentActivityAccess(activityID,InveniRAstdID);
+            //studentInformation = await databaseManager.getStudentAnalytics({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
             //acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
         }else {
             //buscar informações da atividade, a depender das informações do estudante (se já visualizou as informações e/ou se já acertou a flag)

@@ -73,7 +73,7 @@ class PostgresManager {
         return this.dtbase.none('insert into apctf.students(invenira_std_id,activity_id_fk,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) values ($1,$2,false,false,false,false,false,false,false)', [activityStudent.InveniRAstdID, activityStudent.activityID]);
     }
     ;
-    getStudent(activityStudent) {
+    getStudentAnalytics(activityStudent) {
         return this.dtbase.oneOrNone('select (invenira_std_id,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) from apctf.students where invenira_std_id = $1 and activity_id_fk = $2', [activityStudent.InveniRAstdID, activityStudent.activityID]);
     }
     ;
@@ -93,7 +93,7 @@ class PostgresManager {
         return this.dtbase.none('update apctf.students set acessoatividade = $1, acessoinstrucoes = $2, acessoobjetivo = $3, acertouflag = $4, acessodica1 = $5, acessodica2 = $6, acessodica3 = $7 where invenira_std_id = $8 and activity_id_fk = $9', [analytics.json_params.acessoatividade, analytics.json_params.acessoinstrucoes, analytics.json_params.acessoobjetivo, analytics.json_params.acertouflag, analytics.json_params.acessodica1, analytics.json_params.acessodica2, analytics.json_params.acessodica3, analytics.InveniRAstdID, analytics.activityID]);
     }
     ;
-    setActivityAccess(activityID, inveniraStdID) {
+    setStudentActivityAccess(activityID, inveniraStdID) {
         return this.dtbase.none('update apctf.students set acessoatividade = true where activity_id_fk = $1 AND invenira_std_id = $2', [activityID, inveniraStdID]);
     }
     ;
@@ -118,7 +118,7 @@ class PostgresManager {
 }
 //Concrete Product MongoDB - Implementa a Interface DatabaseManager.
 class MongoDBManager {
-    setActivityAccess(activityID, activityStudent) {
+    setStudentActivityAccess(activityID, activityStudent) {
         throw new Error("Method not implemented.");
     }
     getActivityInstructions(activity) {
@@ -175,7 +175,7 @@ class MongoDBManager {
         //Desenvolver se necessário
     }
     ;
-    getStudent(activityStudent) {
+    getStudentAnalytics(activityStudent) {
         //Desenvolver se necessário
     }
     ;
