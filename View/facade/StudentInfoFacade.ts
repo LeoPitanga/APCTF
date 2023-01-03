@@ -1,8 +1,22 @@
 
 const databaseManager = require('../../API/data/databaseManager');
 
-//Implementação do Padrão de Estrutura "FACADE" de forma a facilitar a obtenção/persistência/validação de dados analíticos de um estudante em determinada atividade do Inven!RA para utilização na view/frontend de interação do AP com o estudante.
-class StudentInfoFacade {
+/* Implementação do Padrão de Estrutura "FACADE" de forma a facilitar a obtenção/persistência/validação de dados analíticos de um estudante em determinada atividade do Inven!RA para utilização na view/frontend de interação do AP com o estudante. 
+
+Através da "FACADE" oculta-se do componente "View" (responsável pela criação do FrontEnd) a complexidade dos subsistemas responsáveis por armazenar/fornecer os dados.
+Neste caso, é papel do componente databaseManager armazenar/fornecer esses dados, mas poderia-se utilizar também a própria API/BACKEND como intermediador desses dados, caso a View/Frontend, por exemplo, tenha de ser hospedada em outro servidor distinto do servidor que hospeda a API.
+Estas implementações ficam a cargo da "FACADE", deixando a view preocupar-se apenas com a criação/obtenção de dados do frontend.
+Além disso, fica a cargo da "FACADE" realizar as validações dos dados (Por exemplo, se o estudante acertou ou não a Flag enviada).*/
+
+
+//Interface da Facade
+interface StudentInfoFacadeInterface {
+    getStudentActivity(activityID: string, InveniRAstdID: string): Promise<any>;
+    setStudentActivity(activityID: string, InveniRAstdID: string, action: any): Promise<any>;
+}
+
+//Classe que implementa a interface do padrão facade
+class StudentInfoFacade implements StudentInfoFacadeInterface {
     
     //checa o status atual dos analytics do estudante e retorna as informações relacionadas ao último estado.
     async getStudentActivity(activityID: string, InveniRAstdID: string): Promise<any>{
