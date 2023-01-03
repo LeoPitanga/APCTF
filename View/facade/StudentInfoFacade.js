@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const databaseManager = require('../../API/data/databaseManager');
-//Classe que implementa a interface do padrão facade
+//Classe que implementa a interface da Facade
 class StudentInfoFacade {
     //checa o status atual dos analytics do estudante e retorna as informações relacionadas ao último estado.
     getStudentActivity(activityID, InveniRAstdID) {

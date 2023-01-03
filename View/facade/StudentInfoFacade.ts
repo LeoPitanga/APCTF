@@ -1,7 +1,25 @@
 
 const databaseManager = require('../../API/data/databaseManager');
 
-/* Implementação do Padrão de Estrutura "FACADE" de forma a facilitar a obtenção/persistência/validação de dados analíticos de um estudante em determinada atividade do Inven!RA para utilização na view/frontend de interação do AP com o estudante. 
+/* 
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+PREZADOS PROFESSORES, ATENÇÃO, por gentileza!!! 
+Somente ao revisar a minha pretensa implementação do padrão FACADE percebi que incorri em dois erros que provavelmente invalidam o padrão:
+
+1) A Facade implementada trata apenas de um subsistema (DatabaseManager). Ao revisar o padrão, percebi que é esperado que haja interação do Facade com vários subsistemas (acho que esse ponto até que poderia não invalidar a implementação do padrão, mas certamente o descaracteriza um tanto).
+2) A Facade não deve implementar novas funcionalidades. Este é o principal erro que, ao meu ver, invalida a implementação do padrão no meu projeto, uma vez que a minha pretensa FACADE realiza operações de validação de dados e preenchimento de informações padrão.
+
+Deste modo, manterei no código a implementação provavelmente errada do padrão apenas para fins de verificação/curiosidade dos Srs, mas peço que ****ignorem para efeitos de correção do Módulo****.
+
+O Padrão de Estrutura que efetivamente enviarei para correção é o Adapter, por meio da classe PostgresManager, que implementa a interface DatabaseManager.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+**** Apenas para verificação/curiosidade! Gentileza não considerar para a correção da Atividade! ****
+Implementação do Padrão de Estrutura "FACADE" de forma a facilitar a obtenção/persistência/validação de dados analíticos de um estudante em determinada atividade do Inven!RA para utilização na view/frontend de interação do AP com o estudante. 
 
 Através da "FACADE" oculta-se do componente "View" (responsável pela criação do FrontEnd) a complexidade dos subsistemas responsáveis por armazenar/fornecer os dados.
 Neste caso, é papel do componente databaseManager armazenar/fornecer esses dados, mas poderia-se utilizar também a própria API/BACKEND como intermediador desses dados, caso a View/Frontend, por exemplo, tenha de ser hospedada em outro servidor distinto do servidor que hospeda a API.

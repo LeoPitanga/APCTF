@@ -32,6 +32,7 @@ class MongoDBManagerFactory extends DatabaseManagerFactory {
     ;
 }
 //Concrete Product Postgres - Implementa a Interface DatabaseManager.
+//Considerando o Padrão Estrutural ADAPTER, está classe é o Adapter que implementa a interface de comunicação do código cliente/API (DatabaseManager) com o serviço do PG-Promise (Postgresql).
 class PostgresManager {
     initiateDB() {
         const db = pgp(PGCONNECTION_URI);
@@ -45,34 +46,32 @@ class PostgresManager {
         return this.dtbase.oneOrNone('select * from apctf.activities where activity_id = $1', [activityID]);
     }
     ;
-    getActivityInstructions(activityID) {
+    /* getActivityInstructions (activityID: any) {
         return this.dtbase.oneOrNone('select instrucoesacesso from apctf.activities where activity_id = $1', [activityID]);
-    }
-    ;
-    getActivityObjective(activityID) {
+    };
+
+    getActivityObjective (activityID: any) {
         return this.dtbase.oneOrNone('select instrucoesobjetivo from apctf.activities where activity_id = $1', [activityID]);
-    }
-    ;
-    getActivityFlag(activityID) {
+    };
+
+    getActivityFlag (activityID: any) {
         return this.dtbase.oneOrNone('select act_flag from apctf.activities where activity_id = $1', [activityID]);
-    }
-    ;
-    getActivityDica1(activityID) {
+    };
+
+    getActivityDica1 (activityID: any) {
         return this.dtbase.oneOrNone('select dica1 from apctf.activities where activity_id = $1', [activityID]);
-    }
-    ;
-    getActivityDica2(activityID) {
+    };
+
+    getActivityDica2 (activityID: any) {
         return this.dtbase.oneOrNone('select dica2 from apctf.activities where activity_id = $1', [activityID]);
-    }
-    ;
-    getActivityDica3(activityID) {
+    };
+
+    getActivityDica3 (activityID: any) {
         return this.dtbase.oneOrNone('select dica3 from apctf.activities where activity_id = $1', [activityID]);
-    }
-    ;
-    saveStudent(activityStudent) {
-        return this.dtbase.none('insert into apctf.students(invenira_std_id,activity_id_fk,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) values ($1,$2,false,false,false,false,false,false,false)', [activityStudent.InveniRAstdID, activityStudent.activityID]);
-    }
-    ;
+    }; */
+    /* saveStudent (activityStudent: any) {
+        return this.dtbase.none('insert into apctf.students(invenira_std_id,activity_id_fk,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) values ($1,$2,false,false,false,false,false,false,false)', [activityStudent.InveniRAstdID,activityStudent.activityID]);
+    }; */
     getStudentAnalytics(activityStudent) {
         return this.dtbase.oneOrNone('select (invenira_std_id,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) from apctf.students where invenira_std_id = $1 and activity_id_fk = $2', [activityStudent.InveniRAstdID, activityStudent.activityID]);
     }
@@ -117,6 +116,7 @@ class PostgresManager {
     }
 }
 //Concrete Product MongoDB - Implementa a Interface DatabaseManager.
+//Considerando o Padrão Estrutural ADAPTER, está classe é o Adapter que implementa a interface de comunicação do código cliente/API (DatabaseManager) com serviço do Mongoose (MongoDB).
 class MongoDBManager {
     setStudentActivityAccess(activityID, activityStudent) {
         throw new Error("Method not implemented.");
