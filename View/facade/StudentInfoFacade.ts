@@ -176,4 +176,4 @@ class StudentInfoFacade implements StudentInfoFacadeInterface {
 };
 
 
-module.exports = StudentInfoFacade;
+module.exports = new StudentInfoFacade();

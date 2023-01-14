@@ -14,13 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const FErouter = express_1.default.Router();
-require('../facade/StudentInfoFacade');
+const studentInfo = require('../facade/StudentInfoFacade');
 //Main Student Page
 FErouter.get('/:activityID/:InveniRAstdID', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let activityID = req.params.activityID;
         let InveniRAstdID = req.params.InveniRAstdID;
-        let studentInfo = new StudentInfoFacade();
+        //let studentInfo = new StudentInfoFacade();
         let studentActivity = yield studentInfo.getStudentActivity(activityID, InveniRAstdID);
         let htmlBody = '<!DOCTYPE html><html lang = "pt"><head><meta charset = "UTF-8"><title>CTF</title></head>';
         htmlBody += '<body><h1>Capture The Flag</h1></br></br></br>';
@@ -58,9 +58,9 @@ FErouter.post('/:activityID/:InveniRAstdID', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let activityID = req.params.activityID;
         let InveniRAstdID = req.params.InveniRAstdID;
-        let studentInfoFacade = new StudentInfoFacade();
+        //let studentInfoFacade = new StudentInfoFacade();
         let action = { "tipo": req.body.button, "flag": req.body.flag };
-        let studentActivity = yield studentInfoFacade.setStudentActivity(activityID, InveniRAstdID, action);
+        let studentActivity = yield studentInfo.setStudentActivity(activityID, InveniRAstdID, action);
         let htmlBody = '<!DOCTYPE html><html lang = "pt"><head><meta charset = "UTF-8"><title>CTF</title></head>';
         htmlBody += '<body><h1>Capture The Flag</h1></br></br></br>';
         htmlBody += '<form action="/ctf/' + activityID + '/' + InveniRAstdID + '" method="post"><fieldset>';

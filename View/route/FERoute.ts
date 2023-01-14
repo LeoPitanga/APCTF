@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 const FErouter = express.Router();
 
-require('../facade/StudentInfoFacade');
+const studentInfo = require('../facade/StudentInfoFacade');
 
 //Main Student Page
 FErouter.get('/:activityID/:InveniRAstdID', async function (req: Request, res: Response) {
@@ -9,7 +9,7 @@ FErouter.get('/:activityID/:InveniRAstdID', async function (req: Request, res: R
 	let activityID = req.params.activityID;
     let InveniRAstdID = req.params.InveniRAstdID;
 
-    let studentInfo = new StudentInfoFacade();
+    //let studentInfo = new StudentInfoFacade();
 
     let studentActivity = await studentInfo.getStudentActivity(activityID,InveniRAstdID);
 
@@ -58,10 +58,10 @@ FErouter.post('/:activityID/:InveniRAstdID', async function (req: Request, res: 
     let activityID = req.params.activityID;
     let InveniRAstdID = req.params.InveniRAstdID;
 
-    let studentInfoFacade = new StudentInfoFacade();
+    //let studentInfoFacade = new StudentInfoFacade();
 
     let action = {"tipo":req.body.button,"flag":req.body.flag};
-    let studentActivity = await studentInfoFacade.setStudentActivity(activityID,InveniRAstdID,action);
+    let studentActivity = await studentInfo.setStudentActivity(activityID,InveniRAstdID,action);
 
     let htmlBody = '<!DOCTYPE html><html lang = "pt"><head><meta charset = "UTF-8"><title>CTF</title></head>'
     

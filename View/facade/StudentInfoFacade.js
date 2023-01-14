@@ -183,4 +183,4 @@ class StudentInfoFacade {
     ;
 }
 ;
-module.exports = StudentInfoFacade;
+module.exports = new StudentInfoFacade();
