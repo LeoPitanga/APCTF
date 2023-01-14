@@ -8,15 +8,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+//Receiver do padrão Command
 const databaseManager = require('../../API/data/databaseManager');
-//Classe que implementa a interface da Facade
-class StudentInfoFacade {
-    //checa o status atual dos analytics do estudante e retorna as informações relacionadas ao último estado.
-    getStudentActivity(activityID, InveniRAstdID) {
+//Invoker do padrão Command
+class CommandInvoker {
+    constructor(command) {
+        this.currentCommand = command;
+    }
+    setCommand(command) {
+        this.currentCommand = command;
+    }
+    executeCommand() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.currentCommand.execute();
+        });
+    }
+}
+//Comando que checa o status atual dos analytics do estudante e retorna as informações relacionadas ao último estado através de comunicação direta com o DatabaseManager.
+class GetStudentActivityCommand {
+    constructor(receiver, activityID, InveniRAstdID) {
+        this.backendCommandReceiver = receiver;
+        this.activityID = activityID;
+        this.InveniRAstdID = InveniRAstdID;
+    }
+    execute() {
         return __awaiter(this, void 0, void 0, function* () {
             //checar se estudante está ativo
             //buscar informações do estudante
-            let studentInformation = yield databaseManager.getStudentAnalytics({ "activityID": activityID, "InveniRAstdID": InveniRAstdID });
+            let studentInformation = yield this.backendCommandReceiver.getStudentAnalytics({ "activityID": this.activityID, "InveniRAstdID": this.InveniRAstdID });
             let acessoAtividade = (studentInformation.row.replace('(', "").replace(')', "").split(",")[1].replace('t', 'true').replace('f', 'false') === 'true');
             let acessoInstrucoes = (studentInformation.row.replace('(', "").replace(')', "").split(",")[2].replace('t', 'true').replace('f', 'false') === 'true');
             let acessoObjetivo = (studentInformation.row.replace('(', "").replace(')', "").split(",")[3].replace('t', 'true').replace('f', 'false') === 'true');
@@ -33,13 +52,13 @@ class StudentInfoFacade {
             let dica3 = "Para visualizar a terceira dica, clique no botão 'Ler Dica 3'";
             //atualiza Analytics de "Acesso Atividade", caso seja o primeiro acesso.
             if (!acessoAtividade) {
-                yield databaseManager.setStudentActivityAccess(activityID, InveniRAstdID);
-                //studentInformation = await databaseManager.getStudentAnalytics({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
+                yield this.backendCommandReceiver.setStudentActivityAccess(this.activityID, this.InveniRAstdID);
+                //studentInformation = await backendCommandReceiver.getStudentAnalytics({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
                 //acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
             }
             else {
                 //buscar informações da atividade, a depender das informações do estudante (se já visualizou as informações e/ou se já acertou a flag)
-                let informacoes = yield databaseManager.getActivityDetails(activityID);
+                let informacoes = yield this.backendCommandReceiver.getActivityDetails(this.activityID);
                 if (acessoInstrucoes) {
                     instrucoes = informacoes.instrucoesacesso;
                 }
@@ -68,8 +87,8 @@ class StudentInfoFacade {
             ;
             //Retornar informações PARA O FRONTEND
             return {
-                "activityID": activityID,
-                "InveniRAstdID": InveniRAstdID,
+                "activityID": this.activityID,
+                "InveniRAstdID": this.InveniRAstdID,
                 "json_params": {
                     "instrucoesacesso": instrucoes,
                     "instrucoesobjetivo": objetivo,
@@ -81,13 +100,20 @@ class StudentInfoFacade {
             };
         });
     }
-    ;
-    //
-    setStudentActivity(activityID, InveniRAstdID, action) {
+}
+//Comando que checa o status atual dos analytics do estudante, atualiza o status e retorna as informações atualizadas através de comunicação direta com o DatabaseManager.
+class SetStudentActivityCommand {
+    constructor(receiver, activityID, InveniRAstdID, action) {
+        this.backendCommandReceiver = receiver;
+        this.activityID = activityID;
+        this.InveniRAstdID = InveniRAstdID;
+        this.action = action;
+    }
+    execute() {
         return __awaiter(this, void 0, void 0, function* () {
             //checar se estudante está ativo
             //buscar informações do estudante
-            let studentInformation = yield databaseManager.getStudentAnalytics({ "activityID": activityID, "InveniRAstdID": InveniRAstdID });
+            let studentInformation = yield this.backendCommandReceiver.getStudentAnalytics({ "activityID": this.activityID, "InveniRAstdID": this.InveniRAstdID });
             let acessoAtividade = (studentInformation.row.replace('(', "").replace(')', "").split(",")[1].replace('t', 'true').replace('f', 'false') === 'true');
             let acessoInstrucoes = (studentInformation.row.replace('(', "").replace(')', "").split(",")[2].replace('t', 'true').replace('f', 'false') === 'true');
             let acessoObjetivo = (studentInformation.row.replace('(', "").replace(')', "").split(",")[3].replace('t', 'true').replace('f', 'false') === 'true');
@@ -104,38 +130,38 @@ class StudentInfoFacade {
             let dica3 = "Para visualizar a terceira dica, clique no botão 'Ler Dica 3'";
             //atualiza Analytics de "Acesso Atividade", caso seja o primeiro acesso.
             if (!acessoAtividade) {
-                yield databaseManager.setStudentActivityAccess(activityID, InveniRAstdID);
-                //studentInformation = await databaseManager.getStudentAnalytics({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
+                yield this.backendCommandReceiver.setStudentActivityAccess(this.activityID, this.InveniRAstdID);
+                //studentInformation = await backendCommandReceiver.getStudentAnalytics({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
                 //acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
             }
             else {
                 //buscar informações da atividade, a depender das informações do estudante (se já visualizou as informações e/ou se já acertou a flag)
-                let informacoes = yield databaseManager.getActivityDetails(activityID);
-                switch (action.tipo) {
+                let informacoes = yield this.backendCommandReceiver.getActivityDetails(this.activityID);
+                switch (this.action.tipo) {
                     case "instructionsBtt":
-                        yield databaseManager.setStudentActivityInstructions(activityID, InveniRAstdID);
+                        yield this.backendCommandReceiver.setStudentActivityInstructions(this.activityID, this.InveniRAstdID);
                         acessoInstrucoes = true;
                         break;
                     case "objectiveBtt":
-                        yield databaseManager.setStudentActivityObjective(activityID, InveniRAstdID);
+                        yield this.backendCommandReceiver.setStudentActivityObjective(this.activityID, this.InveniRAstdID);
                         acessoObjetivo = true;
                         break;
                     case "enviarFlagBtt":
-                        if (action.flag === informacoes.act_flag) {
-                            yield databaseManager.setStudentActivityFlag(activityID, InveniRAstdID, action.flag);
+                        if (this.action.flag === informacoes.act_flag) {
+                            yield this.backendCommandReceiver.setStudentActivityFlag(this.activityID, this.InveniRAstdID, this.action.flag);
                             acertouFlag = true;
                         }
                         break;
                     case "dica1Btt":
-                        yield databaseManager.setStudentActivityDica1(activityID, InveniRAstdID);
+                        yield this.backendCommandReceiver.setStudentActivityDica1(this.activityID, this.InveniRAstdID);
                         acessoDica1 = true;
                         break;
                     case "dica2Btt":
-                        yield databaseManager.setStudentActivityDica2(activityID, InveniRAstdID);
+                        yield this.backendCommandReceiver.setStudentActivityDica2(this.activityID, this.InveniRAstdID);
                         acessoDica2 = true;
                         break;
                     case "dica3Btt":
-                        yield databaseManager.setStudentActivityDica3(activityID, InveniRAstdID);
+                        yield this.backendCommandReceiver.setStudentActivityDica3(this.activityID, this.InveniRAstdID);
                         acessoDica3 = true;
                         break;
                 }
@@ -167,8 +193,8 @@ class StudentInfoFacade {
             ;
             //Retornar informações PARA O FRONTEND
             return {
-                "activityID": activityID,
-                "InveniRAstdID": InveniRAstdID,
+                "activityID": this.activityID,
+                "InveniRAstdID": this.InveniRAstdID,
                 "json_params": {
                     "instrucoesacesso": instrucoes,
                     "instrucoesobjetivo": objetivo,
@@ -180,7 +206,23 @@ class StudentInfoFacade {
             };
         });
     }
-    ;
 }
-;
+//Classe que implementa a interface da Facade e é o client do Padrão Command
+class StudentInfoFacade {
+    constructor() {
+        this.commandInvoker = new CommandInvoker(new GetStudentActivityCommand(databaseManager, "1", "1"));
+    }
+    getStudentActivity(activityID, InveniRAstdID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.commandInvoker.setCommand(new GetStudentActivityCommand(databaseManager, activityID, InveniRAstdID));
+            return this.commandInvoker.executeCommand();
+        });
+    }
+    setStudentActivity(activityID, InveniRAstdID, action) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.commandInvoker.setCommand(new SetStudentActivityCommand(databaseManager, activityID, InveniRAstdID, action));
+            return this.commandInvoker.executeCommand();
+        });
+    }
+}
 module.exports = new StudentInfoFacade();
