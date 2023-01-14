@@ -78,7 +78,7 @@ class GetStudentActivityCommand implements BackendCommand {
             if (acessoDica3) {dica3 = informacoes.dica3;};
         };
 
-        //Retornar informações PARA O FRONTEND
+        //Retornar informações para o Cliente
         return {
             "activityID":this.activityID,
             "InveniRAstdID":this.InveniRAstdID,
@@ -94,7 +94,7 @@ class GetStudentActivityCommand implements BackendCommand {
     }
 }
 
-//Comando que checa o status atual dos analytics do estudante, atualiza o status e retorna as informações atualizadas através de comunicação direta com o DatabaseManager.
+//Comando que checa e atualiza o status atual do estudante e retorna as informações atualizadas através de comunicação direta com o DatabaseManager.
 class SetStudentActivityCommand implements BackendCommand {
     private backendCommandReceiver: any;
     private activityID: string;
