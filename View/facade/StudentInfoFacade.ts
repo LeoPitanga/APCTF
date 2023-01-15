@@ -192,6 +192,7 @@ class SetStudentActivityCommand implements BackendCommand {
 
 //Classe que implementa a interface da Facade e é o client do Padrão Command
 class StudentInfoFacade implements StudentInfoFacadeInterface {
+    //Invoker. Iniciado com command inútil apenas por ser obrigado...
     private commandInvoker = new CommandInvoker(new GetStudentActivityCommand(databaseManager, "1","1"));
 
     async getStudentActivity(activityID: string, InveniRAstdID: string): Promise<any> {
