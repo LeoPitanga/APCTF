@@ -85,7 +85,7 @@ class GetStudentActivityCommand {
                 ;
             }
             ;
-            //Retornar informações PARA O FRONTEND
+            //Retornar informações para o Cliente
             return {
                 "activityID": this.activityID,
                 "InveniRAstdID": this.InveniRAstdID,
@@ -101,7 +101,7 @@ class GetStudentActivityCommand {
         });
     }
 }
-//Comando que checa o status atual dos analytics do estudante, atualiza o status e retorna as informações atualizadas através de comunicação direta com o DatabaseManager.
+//Comando que checa e atualiza o status atual do estudante e retorna as informações atualizadas através de comunicação direta com o DatabaseManager.
 class SetStudentActivityCommand {
     constructor(receiver, activityID, InveniRAstdID, action) {
         this.backendCommandReceiver = receiver;
@@ -210,6 +210,7 @@ class SetStudentActivityCommand {
 //Classe que implementa a interface da Facade e é o client do Padrão Command
 class StudentInfoFacade {
     constructor() {
+        //Invoker. Iniciado com command inútil apenas por ser obrigado...
         this.commandInvoker = new CommandInvoker(new GetStudentActivityCommand(databaseManager, "1", "1"));
     }
     getStudentActivity(activityID, InveniRAstdID) {
