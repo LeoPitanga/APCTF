@@ -53,8 +53,6 @@ class GetStudentActivityCommand {
             //atualiza Analytics de "Acesso Atividade", caso seja o primeiro acesso.
             if (!acessoAtividade) {
                 yield this.backendCommandReceiver.setStudentActivityAccess(this.activityID, this.InveniRAstdID);
-                //studentInformation = await backendCommandReceiver.getStudentAnalytics({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
-                //acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
             }
             else {
                 //buscar informações da atividade, a depender das informações do estudante (se já visualizou as informações e/ou se já acertou a flag)
@@ -131,8 +129,6 @@ class SetStudentActivityCommand {
             //atualiza Analytics de "Acesso Atividade", caso seja o primeiro acesso.
             if (!acessoAtividade) {
                 yield this.backendCommandReceiver.setStudentActivityAccess(this.activityID, this.InveniRAstdID);
-                //studentInformation = await backendCommandReceiver.getStudentAnalytics({"activityID":activityID,"InveniRAstdID":InveniRAstdID});
-                //acessoAtividade = (studentInformation.row.replace('(',"").replace(')',"").split(",")[1].replace('t','true').replace('f','false') === 'true');
             }
             else {
                 //buscar informações da atividade, a depender das informações do estudante (se já visualizou as informações e/ou se já acertou a flag)

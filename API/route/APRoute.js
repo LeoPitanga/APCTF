@@ -15,10 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const databaseManager = require('../data/DBManager');
-const crypto1 = require('crypto');
-const generate = function () {
-    return crypto1.randomBytes(20).toString('hex');
-};
 let stdIDexemplo = 1;
 /* Ficheiro Registo:
 {
@@ -100,22 +96,17 @@ router.post('/analytics-atividade', function (req, res) {
 router.post('/deploy-atividade', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const activity = req.body;
-        //console.log(activity.activityID);
         yield databaseManager.saveActivity(activity);
         let url1 = "https://apctf.herokuapp.com/deploy-atividade/" + activity.activityID;
-        //console.log(activity.activityID)
-        //console.log({url: url1})
         res.json({ url: url1 });
     });
 });
 router.post('/deploy-atividade/:activityID', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const activityStudent = req.body;
-        //console.log(activityStudent.activityID)
         yield databaseManager.saveStudent(activityStudent);
         yield databaseManager.updateActivity(req.params.activityID, activityStudent);
         let url1 = "https://apctf.herokuapp.com/ctf/" + req.params.activityID + "/" + activityStudent.InveniRAstdID;
-        //console.log(url1);
         res.json({ url: url1 });
     });
 });

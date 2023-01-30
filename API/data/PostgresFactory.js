@@ -5,7 +5,7 @@ const Factory_1 = require("./Factory");
 const PostgresManager_1 = require("./PostgresManager");
 //Postgres Factory - Concrete Class - herda de DatabaseManagerFactory.
 class PostgresManagerFactory extends Factory_1.DatabaseManagerFactory {
-    //Factory Method - Retorna objeto do tipo PostgresManager, embora Javascript não permita declarar o tipo de retorno do método.
+    //Factory Method - Retorna objeto do tipo PostgresManager.
     getDatabaseManager() {
         const postgresManager = new PostgresManager_1.PostgresManager();
         postgresManager.initiateDB();

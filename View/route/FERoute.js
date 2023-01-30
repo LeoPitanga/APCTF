@@ -58,7 +58,6 @@ FErouter.post('/:activityID/:InveniRAstdID', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let activityID = req.params.activityID;
         let InveniRAstdID = req.params.InveniRAstdID;
-        //let studentInfoFacade = new StudentInfoFacade();
         let action = { "tipo": req.body.button, "flag": req.body.flag };
         let studentActivity = yield studentInfo.setStudentActivity(activityID, InveniRAstdID, action);
         let htmlBody = '<!DOCTYPE html><html lang = "pt"><head><meta charset = "UTF-8"><title>CTF</title></head>';
