@@ -1,5 +1,5 @@
 //Receiver do padrão Command
-const databaseManager = require('../../API/data/databaseManager');
+const databaseManager = require('../../API/data/DBManager');
 
 //Interface da Facade
 interface StudentInfoFacadeInterface {

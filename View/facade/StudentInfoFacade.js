@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 //Receiver do padrão Command
-const databaseManager = require('../../API/data/databaseManager');
+const databaseManager = require('../../API/data/DBManager');
 //Invoker do padrão Command
 class CommandInvoker {
     constructor(command) {

@@ -14,20 +14,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
-const databaseManager = require('../data/databaseManager');
+const databaseManager = require('../data/DBManager');
 const crypto1 = require('crypto');
 const generate = function () {
     return crypto1.randomBytes(20).toString('hex');
 };
+let stdIDexemplo = 1;
 /* Ficheiro Registo:
 {
 "name": "Capture The Flag",
 
 "config_url": "http://<domínio>/configuracao-atividade.html",
-OK!!!"json_params_url": "http:// <domínio>/json-para'ms-atividade",
-OK!!!(FALTA RETORNAR URL FRONTEND ESTUDANTE)"user_url": "http://<domínio>/deploy-atividade",
+"json_params_url": "http:// <domínio>/json-para'ms-atividade",
+"user_url": "http://<domínio>/deploy-atividade",
 "analytics_url": "http://<domínio>/analytics-atividade",
-OK!!!"analytics_list_url": "http://<domínio>/lista-analytics-atividade"
+"analytics_list_url": "http://<domínio>/lista-analytics-atividade"
 }
 */
 router.get('/', function (req, res) {
@@ -118,36 +119,12 @@ router.post('/deploy-atividade/:activityID', function (req, res) {
         res.json({ url: url1 });
     });
 });
-//FrontEnd - Migrar!
-/* router.get('/ctf/:activityID/:InveniRAstdID', async function (req: Request, res: Response) {
-    
-    console.log(req.params.activityID);
-    console.log(req.params.InveniRAstdID);
-    console.log(await databaseManager.getActivityDetails(req.params.activityID));
-
-    const data = {
-        "activityID":req.params.activityID,
-        "InveniRAstdID":req.params.InveniRAstdID,
-        "json_params":{
-           "acessoatividade":true,
-           "acessoinstrucoes":true,
-           "acessoobjetivo":true,
-           "acertouflag":false,
-           "acessodica1":false,
-           "acessodica2":false,
-           "acessodica3":false,
-        }
-    };
-    //console.log(data);
-    await databaseManager.saveAnalytics(data);
-
-    res.json("Ok!");
-}); */
-router.get('/criarActivity', function (req, res) {
+router.get('/criarActivityExemplo', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
+        stdIDexemplo++;
         const data = {
-            activityID: generate(),
-            InveniRAstdID: generate(),
+            activityID: "atividadeexemplo",
+            InveniRAstdID: stdIDexemplo,
             json_params: {
                 "instrucoesacesso": "instrucoes",
                 "instrucoesobjetivo": "objetivo",
@@ -158,8 +135,26 @@ router.get('/criarActivity', function (req, res) {
             }
         };
         yield databaseManager.saveActivity(data);
-        yield databaseManager.saveStudent(data);
         yield databaseManager.updateActivity(data.activityID, data);
+        res.json("Foi!");
+    });
+});
+router.get('/criarStudentExemplo', function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        stdIDexemplo++;
+        const data = {
+            activityID: "atividadeexemplo",
+            InveniRAstdID: stdIDexemplo,
+            json_params: {
+                "instrucoesacesso": "instrucoes",
+                "instrucoesobjetivo": "objetivo",
+                "flag": "g45hgh4th454hg45h6464u565756",
+                "dica1": "Dica: Vá por ali",
+                "dica2": "Dica: Vá por acolá",
+                "dica3": "Dica: Não vá"
+            }
+        };
+        yield databaseManager.saveStudent(data);
         res.json("Foi!");
     });
 });

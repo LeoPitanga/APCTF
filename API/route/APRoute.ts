@@ -1,21 +1,22 @@
 import express, { Request, Response, NextFunction } from 'express';
 const router = express.Router();
-const databaseManager = require('../data/databaseManager');
+const databaseManager = require('../data/DBManager');
 
 const crypto1 = require('crypto');
 const generate = function () {
 	return crypto1.randomBytes(20).toString('hex');
 };
+let stdIDexemplo = 1;
 
 /* Ficheiro Registo:
 {
 "name": "Capture The Flag",
 
 "config_url": "http://<domínio>/configuracao-atividade.html",
-OK!!!"json_params_url": "http:// <domínio>/json-para'ms-atividade",
-OK!!!(FALTA RETORNAR URL FRONTEND ESTUDANTE)"user_url": "http://<domínio>/deploy-atividade",
+"json_params_url": "http:// <domínio>/json-para'ms-atividade",
+"user_url": "http://<domínio>/deploy-atividade",
 "analytics_url": "http://<domínio>/analytics-atividade",
-OK!!!"analytics_list_url": "http://<domínio>/lista-analytics-atividade"
+"analytics_list_url": "http://<domínio>/lista-analytics-atividade"
 } 
 */
 
@@ -105,36 +106,11 @@ router.post('/deploy-atividade/:activityID', async function (req: Request, res: 
 	res.json({url: url1});
 });
 
-//FrontEnd - Migrar!
-/* router.get('/ctf/:activityID/:InveniRAstdID', async function (req: Request, res: Response) {
-	
-	console.log(req.params.activityID);
-	console.log(req.params.InveniRAstdID);
-	console.log(await databaseManager.getActivityDetails(req.params.activityID));
-
+router.get('/criarActivityExemplo', async function (req: Request, res: Response) {
+	stdIDexemplo++;
 	const data = { 
-		"activityID":req.params.activityID,
-		"InveniRAstdID":req.params.InveniRAstdID,
-		"json_params":{
-		   "acessoatividade":true,
-		   "acessoinstrucoes":true,
-		   "acessoobjetivo":true,
-		   "acertouflag":false,
-		   "acessodica1":false,
-		   "acessodica2":false,
-		   "acessodica3":false,
-		}
-	};
-	//console.log(data);
-	await databaseManager.saveAnalytics(data);
-
-	res.json("Ok!");
-}); */
-
-router.get('/criarActivity', async function (req: Request, res: Response) {
-	const data = { 
-		activityID:generate(),
-		InveniRAstdID:generate(),
+		activityID:"atividadeexemplo",
+		InveniRAstdID:stdIDexemplo,
 		json_params:{
 		   "instrucoesacesso":"instrucoes",
 		   "instrucoesobjetivo":"objetivo",
@@ -145,9 +121,28 @@ router.get('/criarActivity', async function (req: Request, res: Response) {
 		}
 	};
 	await databaseManager.saveActivity(data);
-	await databaseManager.saveStudent(data);
 	await databaseManager.updateActivity(data.activityID, data);
 	res.json("Foi!");
 });
+
+router.get('/criarStudentExemplo', async function (req: Request, res: Response) {
+	stdIDexemplo++;
+	const data = { 
+		activityID:"atividadeexemplo",
+		InveniRAstdID:stdIDexemplo,
+		json_params:{
+		   "instrucoesacesso":"instrucoes",
+		   "instrucoesobjetivo":"objetivo",
+		   "flag":"g45hgh4th454hg45h6464u565756",
+		   "dica1":"Dica: Vá por ali",
+		   "dica2":"Dica: Vá por acolá",
+		   "dica3":"Dica: Não vá"
+		}
+	};
+	await databaseManager.saveStudent(data);
+	res.json("Foi!");
+});
+
+
 
 module.exports = router;
