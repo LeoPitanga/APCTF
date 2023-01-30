@@ -2,10 +2,6 @@ import express, { Request, Response, NextFunction } from 'express';
 const router = express.Router();
 const databaseManager = require('../data/DBManager');
 
-const crypto1 = require('crypto');
-const generate = function () {
-	return crypto1.randomBytes(20).toString('hex');
-};
 let stdIDexemplo = 1;
 
 /* Ficheiro Registo:
@@ -88,21 +84,16 @@ router.post('/analytics-atividade', async function (req: Request, res: Response)
 
 router.post('/deploy-atividade', async function (req: Request, res: Response) {
 	const activity = req.body;
-	//console.log(activity.activityID);
 	await databaseManager.saveActivity(activity);
 	let url1 = "https://apctf.herokuapp.com/deploy-atividade/"+activity.activityID;
-	//console.log(activity.activityID)
-	//console.log({url: url1})
 	res.json({url: url1});
 });
 
 router.post('/deploy-atividade/:activityID', async function (req: Request, res: Response) {
 	const activityStudent = req.body;
-	//console.log(activityStudent.activityID)
 	await databaseManager.saveStudent(activityStudent);
 	await databaseManager.updateActivity(req.params.activityID, activityStudent);
 	let url1 = "https://apctf.herokuapp.com/ctf/"+req.params.activityID+"/"+activityStudent.InveniRAstdID;
-	//console.log(url1);
 	res.json({url: url1});
 });
 

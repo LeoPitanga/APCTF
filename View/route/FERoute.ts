@@ -58,8 +58,6 @@ FErouter.post('/:activityID/:InveniRAstdID', async function (req: Request, res: 
     let activityID = req.params.activityID;
     let InveniRAstdID = req.params.InveniRAstdID;
 
-    //let studentInfoFacade = new StudentInfoFacade();
-
     let action = {"tipo":req.body.button,"flag":req.body.flag};
     let studentActivity = await studentInfo.setStudentActivity(activityID,InveniRAstdID,action);
 

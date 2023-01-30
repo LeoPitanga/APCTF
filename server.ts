@@ -14,6 +14,5 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.use('/', require('./API/route/APRoute'));
 //Frontend
 app.use('/ctf/', require('./View/route/FERoute'));
-//app.use(express.static(__dirname + "\\Frontend\\route"));
 
 app.listen(process.env.PORT || 3000);
