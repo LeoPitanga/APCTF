@@ -78,6 +78,7 @@ router.post('/analytics-atividade', function (req, res) {
         if (yield databaseManager.getActivityDetails(activityID)) {
             let analytics = yield databaseManager.getAnalytics(activityID);
             let analyticsjson = [];
+            //Testa de a Atividade tem Analytics
             if (analytics.length) {
                 for (var i = 0; i < analytics.length; i++) {
                     let inveniraStdID1 = analytics[i].row.replace('(', "").replace(')', "").split(",")[0];
@@ -96,7 +97,7 @@ router.post('/analytics-atividade', function (req, res) {
                 res.json(analyticsjson);
             }
             else {
-                res.status(400).send('Erro! Atividade sem Analytics!');
+                res.status(500).send('Erro! Atividade sem Analytics!');
             }
         }
         else {
