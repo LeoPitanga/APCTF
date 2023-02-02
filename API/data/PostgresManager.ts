@@ -1,4 +1,4 @@
-import {DatabaseManager} from "./DatabaseManager";
+import {DatabaseManager} from "./databaseManager";
 
 //Concrete Product Postgres - Implementa a Interface DatabaseManager.
 //Considerando o Padrão Estrutural ADAPTER, está classe é o Adapter que implementa a interface de comunicação do código cliente/API (DatabaseManager) com o serviço do PG-Promise (Postgresql).
