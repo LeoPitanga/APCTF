@@ -74,27 +74,33 @@ router.get('/lista-analytics-atividade', function (req, res) {
 router.post('/analytics-atividade', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const activityID = req.body.activityID;
-        let analytics = yield databaseManager.getAnalytics(activityID);
-        let analyticsjson = [];
-        if (analytics.length) {
-            for (var i = 0; i < analytics.length; i++) {
-                let inveniraStdID1 = analytics[i].row.replace('(', "").replace(')', "").split(",")[0];
-                let acessoAtividade1 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[1].replace('t', 'true').replace('f', 'false') === 'true');
-                let acessoInstrucoes1 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[2].replace('t', 'true').replace('f', 'false') === 'true');
-                let acessoObjetivo1 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[3].replace('t', 'true').replace('f', 'false') === 'true');
-                let acertouFlag1 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[4].replace('t', 'true').replace('f', 'false') === 'true');
-                let acessoDica11 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[5].replace('t', 'true').replace('f', 'false') === 'true');
-                let acessoDica21 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[6].replace('t', 'true').replace('f', 'false') === 'true');
-                let acessoDica31 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[7].replace('t', 'true').replace('f', 'false') === 'true');
-                analyticsjson.push({
-                    inveniraStdID: inveniraStdID1,
-                    quantAnalytics: [acessoAtividade1, acessoInstrucoes1, acessoObjetivo1, acertouFlag1, acessoDica11, acessoDica21, acessoDica31]
-                });
+        //Testa se a Atividade Existe
+        if (databaseManager.getAnalytics(activityID).length) {
+            let analytics = yield databaseManager.getAnalytics(activityID);
+            let analyticsjson = [];
+            if (analytics.length) {
+                for (var i = 0; i < analytics.length; i++) {
+                    let inveniraStdID1 = analytics[i].row.replace('(', "").replace(')', "").split(",")[0];
+                    let acessoAtividade1 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[1].replace('t', 'true').replace('f', 'false') === 'true');
+                    let acessoInstrucoes1 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[2].replace('t', 'true').replace('f', 'false') === 'true');
+                    let acessoObjetivo1 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[3].replace('t', 'true').replace('f', 'false') === 'true');
+                    let acertouFlag1 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[4].replace('t', 'true').replace('f', 'false') === 'true');
+                    let acessoDica11 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[5].replace('t', 'true').replace('f', 'false') === 'true');
+                    let acessoDica21 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[6].replace('t', 'true').replace('f', 'false') === 'true');
+                    let acessoDica31 = (analytics[i].row.replace('(', "").replace(')', "").split(",")[7].replace('t', 'true').replace('f', 'false') === 'true');
+                    analyticsjson.push({
+                        inveniraStdID: inveniraStdID1,
+                        quantAnalytics: [acessoAtividade1, acessoInstrucoes1, acessoObjetivo1, acertouFlag1, acessoDica11, acessoDica21, acessoDica31]
+                    });
+                }
+                res.json(analyticsjson);
             }
-            res.json(analyticsjson);
+            else {
+                res.status(400).send('Erro! Atividade sem Analytics!');
+            }
         }
         else {
-            res.status(400).send('Erro! Atividade não encontrada ou sem Analytics!');
+            res.status(400).send('Erro! Atividade não encontrada!');
         }
     });
 });
