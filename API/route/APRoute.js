@@ -75,7 +75,7 @@ router.post('/analytics-atividade', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const activityID = req.body.activityID;
         //Testa se a Atividade Existe
-        if (databaseManager.getAnalytics(activityID).length) {
+        if (yield databaseManager.getAnalytics(activityID).length) {
             let analytics = yield databaseManager.getAnalytics(activityID);
             let analyticsjson = [];
             if (analytics.length) {
