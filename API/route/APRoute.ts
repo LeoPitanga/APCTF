@@ -61,10 +61,11 @@ router.post('/analytics-atividade', async function (req: Request, res: Response)
 	const activityID = req.body.activityID;
 	
 	//Testa se a Atividade Existe
-	if (await databaseManager.getAnalytics(activityID).length){
+	if (await databaseManager.getActivityDetails(activityID)){
 		let analytics: any = await databaseManager.getAnalytics(activityID);
 		let analyticsjson = [];
 		
+		//Testa de a Atividade tem Analytics
 		if (analytics.length) {
 			for (var i = 0; i < analytics.length; i++) { 
 				let inveniraStdID1 = analytics[i].row.replace('(',"").replace(')',"").split(",")[0];
