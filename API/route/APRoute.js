@@ -94,7 +94,7 @@ router.post('/analytics-atividade', function (req, res) {
             res.json(analyticsjson);
         }
         else {
-            res.status(400).send('Erro! Atividade não encontrada sem Analytics!');
+            res.status(400).send('Erro! Atividade não encontrada ou sem Analytics!');
         }
     });
 });
