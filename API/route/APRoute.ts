@@ -94,11 +94,15 @@ router.post('/analytics-atividade', async function (req: Request, res: Response)
 	
 });
 
-router.post('/deploy-atividade', async function (req: Request, res: Response) {
+router.post('/deploy-atividade', async function (req: Request, res: Response, next: NextFunction) {
 	const activity = req.body;
-	await databaseManager.saveActivity(activity);
+	try {
+		await databaseManager.saveActivity(activity);
 	let url1 = "https://apctf.herokuapp.com/deploy-atividade/"+activity.activityID;
 	res.json({url: url1});
+	} catch (error) {
+		next(error);
+	}
 });
 
 router.post('/deploy-atividade/:activityID', async function (req: Request, res: Response) {

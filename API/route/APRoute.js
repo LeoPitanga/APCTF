@@ -105,12 +105,17 @@ router.post('/analytics-atividade', function (req, res) {
         }
     });
 });
-router.post('/deploy-atividade', function (req, res) {
+router.post('/deploy-atividade', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         const activity = req.body;
-        yield databaseManager.saveActivity(activity);
-        let url1 = "https://apctf.herokuapp.com/deploy-atividade/" + activity.activityID;
-        res.json({ url: url1 });
+        try {
+            yield databaseManager.saveActivity(activity);
+            let url1 = "https://apctf.herokuapp.com/deploy-atividade/" + activity.activityID;
+            res.json({ url: url1 });
+        }
+        catch (error) {
+            next(error);
+        }
     });
 });
 router.post('/deploy-atividade/:activityID', function (req, res) {
