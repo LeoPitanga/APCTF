@@ -3,7 +3,7 @@ import {DatabaseManager} from "./databaseManager";
 //Concrete Product Postgres - Implementa a Interface DatabaseManager.
 //Considerando o Padrão Estrutural ADAPTER, está classe é o Adapter que implementa a interface de comunicação do código cliente/API (DatabaseManager) com o serviço do PG-Promise (Postgresql).
 export class PostgresManager implements DatabaseManager {
-		
+			
 	dtbase: any;
 	pgp = require('pg-promise')();
 	PGCONNECTION_URI = process.env.POSTGRES_URI || 'postgres://postgres:123321@localhost:5432/apctf';
@@ -24,6 +24,10 @@ export class PostgresManager implements DatabaseManager {
 	saveStudent (activityStudent: any) {
 		return this.dtbase.none('insert into apctf.students(invenira_std_id,activity_id_fk,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) values ($1,$2,false,false,false,false,false,false,false)', [activityStudent.InveniRAstdID,activityStudent.activityID]);
 	};
+
+	getStudent(activityStudent: any) {
+		return this.dtbase.oneOrNone('select (invenira_std_id,activity_id_fk,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) from apctf.students where invenira_std_id = $1', [activityStudent.InveniRAstdID]);
+	}
 
 	getStudentAnalytics (activityStudent: any) {
 		return this.dtbase.oneOrNone('select (invenira_std_id,acessoatividade,acessoinstrucoes,acessoobjetivo,acertouflag,acessodica1,acessodica2,acessodica3) from apctf.students where invenira_std_id = $1 and activity_id_fk = $2', [activityStudent.InveniRAstdID,activityStudent.activityID]);

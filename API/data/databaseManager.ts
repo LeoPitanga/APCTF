@@ -6,6 +6,7 @@ export interface DatabaseManager {
 	saveActivity (activity: any): any;
 	getActivityDetails (activity: any): any;
 	saveStudent (activityStudent: any): any;
+	getStudent (activityStudent: any): any;
 	getStudentAnalytics (activityStudent: any): any;
 	updateActivity (activityID: any, activityStudent: any): any;
 	getAnalytics(activityID: any): any;

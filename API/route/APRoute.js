@@ -134,12 +134,31 @@ router.post('/deploy-atividade', function (req, res, next) {
 router.post('/deploy-atividade/:activityID', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const activityStudent = req.body;
-        yield databaseManager.saveStudent(activityStudent);
-        yield databaseManager.updateActivity(req.params.activityID, activityStudent);
-        let url1 = "https://apctf.herokuapp.com/ctf/" + req.params.activityID + "/" + activityStudent.InveniRAstdID;
-        res.json({ url: url1 });
+        //Testa se existe ActivityID no Json da Requisição
+        if (!(activityStudent.activityID === null) && !(activityStudent.activityID === undefined)) {
+            //Testa se Atividade existe
+            if (!((yield databaseManager.getActivityDetails(activityStudent.activityID)) === null)) {
+                //Testa se Estudante já não existe
+                if ((yield databaseManager.getStudent(activityStudent)) === null) {
+                    yield databaseManager.saveStudent(activityStudent);
+                    yield databaseManager.updateActivity(req.params.activityID, activityStudent);
+                    let url1 = "https://apctf.herokuapp.com/ctf/" + req.params.activityID + "/" + activityStudent.InveniRAstdID;
+                    res.json({ url: url1 });
+                }
+                else {
+                    res.status(400).send('Erro! Estudante ' + activityStudent.InveniRAstdID + ' já cadastrado!');
+                }
+            }
+            else {
+                res.status(400).send('Erro! Atividade ' + activityStudent.activityID + ' não cadastrada!');
+            }
+        }
+        else {
+            res.status(400).send('Erro! Favor verificar json da Requisição!');
+        }
     });
 });
+//APENAS PARA FINS DE TESTES
 router.get('/criarActivityExemplo', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         stdIDexemplo++;
@@ -166,6 +185,7 @@ router.get('/criarActivityExemplo', function (req, res, next) {
         }
     });
 });
+//APENAS PARA FINS DE TESTES
 router.get('/criarStudentExemplo', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         stdIDexemplo++;
