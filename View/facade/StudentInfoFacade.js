@@ -217,6 +217,8 @@ class SetStudentActivityCommand {
                     return {
                         "activityID": this.activityID,
                         "InveniRAstdID": this.InveniRAstdID,
+                        "status": 200,
+                        "erro": "",
                         "json_params": {
                             "instrucoesacesso": instrucoes,
                             "instrucoesobjetivo": objetivo,
