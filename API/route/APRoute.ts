@@ -123,20 +123,20 @@ router.post('/deploy-atividade/:activityID', async function (req: Request, res: 
 	const activityStudent = req.body;
 	
 	//Testa se existe ActivityID no Json da Requisição
-	if (!(activityStudent.activityID === null) && !(activityStudent.activityID === undefined)) {
+	if (!(req.params.activityID === null) && !(req.params.activityID === undefined)) {
 		//Testa se Atividade existe
-		if (!((await databaseManager.getActivityDetails(activityStudent.activityID)) === null)){
+		if (!((await databaseManager.getActivityDetails(req.params.activityID)) === null)){
 			//Testa se Estudante já não existe
-			if ((await databaseManager.getStudent(activityStudent)) === null){
+			if ((await databaseManager.getStudentAnalytics(activityStudent)) === null){
 				await databaseManager.saveStudent(activityStudent);
 				await databaseManager.updateActivity(req.params.activityID, activityStudent);
 				let url1 = "https://apctf.herokuapp.com/ctf/"+req.params.activityID+"/"+activityStudent.InveniRAstdID;
 				res.json({url: url1});
 			} else {
-				res.status(400).send('Erro! Estudante '+activityStudent.InveniRAstdID+' já cadastrado!');
+				res.status(400).send('Erro! Estudante '+activityStudent.InveniRAstdID+' já cadastrado na atividade '+req.params.activityID+'!');
 			}
 		} else {
-			res.status(400).send('Erro! Atividade '+activityStudent.activityID+' não cadastrada!');
+			res.status(400).send('Erro! Atividade '+req.params.activityID+' não cadastrada!');
 		}
 	} else {
 		res.status(400).send('Erro! Favor verificar json da Requisição!');

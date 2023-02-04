@@ -13,7 +13,8 @@ TABLESPACE pg_default;
 
 CREATE TABLE IF NOT EXISTS apctf.students
 (
-	invenira_std_id VARCHAR(255) PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
+	invenira_std_id VARCHAR(255),
 	activity_id_fk VARCHAR(255) NOT NULL,
 	acessoAtividade BOOLEAN,
 	acessoInstrucoes BOOLEAN,
